@@ -1,511 +1,575 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900"
-      rel="stylesheet"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Furkan Barış Duyar | Game Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <style>
+        /* Custom Styles for the 'Fancy' Game Dev Look */
+        body {
+            background-color: #0a0a1a;
+            color: #e0e0e0;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+        .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+        .hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        .glass-effect {
+            background: rgba(10, 10, 26, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .neon-glow-purple {
+            box-shadow: 0 0 5px rgba(168, 85, 247, 0.8), 0 0 10px rgba(168, 85, 247, 0.6), 0 0 20px rgba(168, 85, 247, 0.4);
+        }
+        .project-card {
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-size: cover;
+            background-position: center;
+        }
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.7), 0 0 30px rgba(99, 102, 241, 0.5);
+        }
+        .skill-tag {
+            transition: all 0.3s ease;
+        }
+        .skill-tag:hover {
+            background-color: #4f46e5;
+            color: #fff;
+            transform: scale(1.05);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4f46e5;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6366f1;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .modal {
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease;
+        }
+        .modal.hidden .modal-content {
+           transform: scale(0.95);
+        }
+    </style>
+</head>
+<body class="antialiased">
 
-    <title>Reflux HTML CSS Template</title>
-<!--
-Reflux Template
-https://templatemo.com/tm-531-reflux
--->
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Header & Nav -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-effect">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#" class="font-orbitron text-xl font-bold text-white">PeaceHears</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#about" class="text-gray-300 hover:text-indigo-400 transition">About</a>
+                <a href="#professional" class="text-gray-300 hover:text-indigo-400 transition">Professional Work</a>
+                <a href="#personal" class="text-gray-300 hover:text-indigo-400 transition">Personal & University Projects</a>
+                <a href="#contact" class="text-gray-300 hover:text-indigo-400 transition">Contact</a>
+            </div>
+        </nav>
+    </header>
 
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="assets/css/fontawesome.css" />
-    <link rel="stylesheet" href="assets/css/templatemo-style.css" />
-    <link rel="stylesheet" href="assets/css/owl.css" />
-    <link rel="stylesheet" href="assets/css/lightbox.css" />
-  </head>
-
-  <body>
-    <div id="page-wraper">
-      <!-- Sidebar Menu -->
-      <div class="responsive-nav">
-        <i class="fa fa-bars" id="menu-toggle"></i>
-        <div id="menu" class="menu">
-          <i class="fa fa-times" id="menu-close"></i>
-          <div class="container">
-            <div class="image">
-              <a href="#"><img src="assets/images/profile-picture/author-image.jpg" alt="" /></a>
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center text-center overflow-hidden">
+        <canvas class="hero-canvas"></canvas>
+        <div class="relative z-10 px-4">
+            <h1 class="font-orbitron text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-widest uppercase">
+                FURKAN BARIS DUYAR
+            </h1>
+            <p class="mt-4 text-lg md:text-2xl text-indigo-300 font-light">
+                Game Developer
+            </p>
+            <div class="mt-8 flex justify-center space-x-6">
+                 <a href="https://github.com/peacehears" target="_blank" class="text-gray-300 hover:text-indigo-400 transition duration-300">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/furkan-bar%C4%B1%C5%9F-duyar-56214a1a5/" target="_blank" class="text-gray-300 hover:text-indigo-400 transition duration-300">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+                 <a href="https://peacehears.itch.io/" target="_blank" class="text-gray-300 hover:text-indigo-400 transition duration-300">
+                    <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28"><path d="M14.008 2.085c.42-.843 1.28-.843 1.7 0l1.68 3.385 3.738.542c.925.134 1.292 1.272.624 1.92L19.08 10.55l.635 3.72c.16  .922-.806 1.62-1.658 1.2L14.008 13.8l-3.34 1.67c-.85.42-1.818-.278-1.657-1.2l.635-3.72-2.67-2.618c-.668-.648-.3-1.786.625-1.92l3.737-.542 1.68-3.385zM28 19.46v-2.53c0-1.325-.93-2.43-2.2-2.66l-4.48-.8c-.27-.05-.5-.19-.67-.39l-2-2.3c-.7-.81-1.98-.81-2.68 0l-2 2.3c-.17.2-.4.34-.67-.39l-4.48.8c-1.27.23-2.2 1.335-2.2 2.66v2.53c0 1.325.93 2.43 2.2 2.66l4.48.8c.27.05-.5.19-.67.39l2 2.3c.7.81 1.98.81 2.68 0l2-2.3c.17-.2.4-.34-.67-.39l4.48-.8c1.27-.23 2.2-1.335 2.2-2.66z"/></svg>
+                </a>
             </div>
-            <div class="author-content">
-              <h4>Reflux Me</h4>
-              <span>Web Designer</span>
-            </div>
-            <nav class="main-nav" role="navigation">
-              <ul class="main-menu">
-                <li><a href="#section1">About Me</a></li>
-                <li><a href="#section2">What I’m good at</a></li>
-                <li><a href="#section3">My Work</a></li>
-                <li><a href="#section4">Contact Me</a></li>
-              </ul>
-            </nav>
-            <div class="social-network">
-              <ul class="soial-icons">
-                <li>
-                  <a href="https://fb.com/templatemo"
-                    ><i class="fa fa-facebook"></i
-                  ></a>
-                </li>
-                <li>
-                  <a href="#"><i class="fa fa-twitter"></i></a>
-                </li>
-                <li>
-                  <a href="#"><i class="fa fa-linkedin"></i></a>
-                </li>
-                <li>
-                  <a href="#"><i class="fa fa-dribbble"></i></a>
-                </li>
-                <li>
-                  <a href="#"><i class="fa fa-rss"></i></a>
-                </li>
-              </ul>
-            </div>
-            <div class="copyright-text">
-              <p>Copyright 2019 Reflux Design</p>
-            </div>
-          </div>
         </div>
-      </div>
+    </section>
+    
+    <main class="relative z-20">
 
-      <section class="section about-me" data-section="section1">
-        <div class="container">
-          <div class="section-heading">
-            <h2>About Me</h2>
-            <div class="line-dec"></div>
-            <span
-              >This is a Bootstrap v4.2.1 CSS Template for you. Edit and use
-              this layout for your site. Updated on 21 May 2019 for repeated main menu HTML code.</span
-            >
-          </div>
-          <div class="left-image-post">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="left-image">
-                  <img src="assets/images/about-me/left-image.jpg" alt="" />
+        <!-- About Section -->
+        <section id="about" class="py-20 lg:py-32">
+            <div class="container mx-auto px-6">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h2 class="font-orbitron text-3xl lg:text-4xl font-bold text-white mb-6 fade-in">About Me</h2>
+                    <p class="text-lg text-gray-300 mb-4 fade-in">
+                        A passionate game developer with commercial experience at studios like Masomo/Miniclip, contributing to flagship mobile titles played by over 110 million players. My journey began at university, building games in Unity/C#, and has since evolved to mastering C++ with Cocos2d-x and now Unreal Engine 5. 
+                    </p>
+                    <p class="text-lg text-gray-300 fade-in">
+                        I am currently enhancing my expertise by pursuing an MSc in Computer Games Technology at Abertay University, UK, where I'm diving deep into advanced graphics with DirectX11 and AI-driven procedural content generation. I thrive on solving complex technical challenges and building immersive gaming experiences from the ground up.
+                    </p>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <div class="right-text">
-                  <h4>Reflux HTML CSS Template</h4>
-                  <p>
-                    Donec tristique feugiat lacus, at sollicitudin nunc euismod
-                    sed. Mauris viverra, erat non sagittis gravida, elit dui
-                    mollis ante, sit amet eleifend purus ligula eget eros. Sed
-                    tincidunt quam vitae neque pharetra dignissim eget ut
-                    libero.
-                  </p>
-                  <div class="white-button">
-                    <a href="#">Read More</a>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-          <div class="right-image-post">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="left-text">
-                  <h4>Sed sagittis rhoncus velit</h4>
-                  <p>
-                    Pellentesque habitant morbi tristique senectus et netus et
-                    malesuada fames ac turpis egestas. Vestibulum fermentum
-                    eleifend nibh, vitae sodales elit finibus pretium.
-                    Suspendisse potenti. Ut sollicitudin risus a sollicitudin
-                    semper.
-                  </p>
-                  <div class="white-button">
-                    <a href="#">Read More</a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="right-image">
-                  <img src="assets/images/about-me/right-image.jpg" alt="" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section class="section my-services" data-section="section2">
-        <div class="container">
-          <div class="section-heading">
-            <h2>What I’m good at?</h2>
-            <div class="line-dec"></div>
-            <span
-              >Curabitur leo felis, rutrum vitae varius eu, malesuada a tortor.
-              Vestibulum congue leo et tellus aliquam, eu viverra nulla semper.
-              Nullam eu faucibus diam. Donec eget massa ante.</span
-            >
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="service-item">
-                <div class="first-service-icon service-icon"></div>
-                <h4>HTML5 &amp; CSS3</h4>
-                <p>
-                  Phasellus non convallis dolor. Integer tempor hendrerit arcu
-                  at bibendum. Sed ac ante non metus vehicula congue quis eget
-                  eros.
+        <!-- Skills Section -->
+        <section id="skills" class="py-20 lg:py-24 bg-black bg-opacity-20">
+            <div class="container mx-auto px-6">
+                <h2 class="font-orbitron text-3xl lg:text-4xl font-bold text-center text-white mb-12 fade-in">Core Technologies</h2>
+                <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-center">
+                    <div class="skill-tag glass-effect p-4 rounded-lg fade-in">C++</div>
+                    <div class="skill-tag glass-effect p-4 rounded-lg fade-in">Unreal Engine</div>
+                    <div class="skill-tag glass-effect p-4 rounded-lg fade-in">Unity</div>
+                    <div class="skill-tag glass-effect p-4 rounded-lg fade-in">C#</div>
+                    <div class="skill-tag glass-effect p-4 rounded-lg fade-in">Cocos2d-x</div>
+                    <div class="skill-tag glass-effect p-4 rounded-lg fade-in">DirectX11</div>
+                    <div class="skill-tag glass-effect p-4 rounded-lg fade-in">Procedural Content</div>
+                    <div class="skill-tag glass-effect p-4 rounded-lg fade-in">Gameplay Programming</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Professional Work Section -->
+        <section id="professional" class="py-20 lg:py-32">
+            <div class="container mx-auto px-6">
+                <h2 class="font-orbitron text-3xl lg:text-4xl font-bold text-center text-white mb-16 fade-in">Professional Work</h2>
+                <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+                    
+                    <!-- General Card -->
+                    <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('');" data-project="general-professional-work">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                        <div class="relative p-6 h-full flex flex-col justify-end">
+                            <h3 class="font-orbitron text-2xl font-bold text-white">General Information</h3>
+                            <p class="text-sm text-indigo-400 mb-2">Cocos2d-x, C++, Unity, C#, Java, Objective-C</p>
+                            <p class="text-gray-200">Contributed to flagship 1v1 online sport games in Masomo/Miniclip with over 110 millions of global players. And currently contributing to unannounced PC game in Astrarium Games as part-time. Click to see details.</p>
+                        </div>
+                    </div>
+
+                    <!-- Head Ball 2 Card -->
+                    <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/LExZ6fL.jpeg');" data-project="head-ball-2">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                        <div class="relative p-6 h-full flex flex-col justify-end">
+                            <h3 class="font-orbitron text-2xl font-bold text-white">Head Ball 2</h3>
+                            <p class="text-sm text-indigo-400 mb-2">Cocos2d-x, C++, Java, Objective-C</p>
+                            <p class="text-gray-200">Contributed to a flagship 1v1 online football game with over 100 millions of global players. Click to see details.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Basketball Arena Card -->
+                    <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/tsDQWKs.jpeg');" data-project="basketball-arena">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                        <div class="relative p-6 h-full flex flex-col justify-end">
+                            <h3 class="font-orbitron text-2xl font-bold text-white">Basketball Arena</h3>
+                            <p class="text-sm text-indigo-400 mb-2">Cocos2d-x, C++, Java, Objective-C</p>
+                            <p class="text-gray-200">Contributed to a 1v1 online basketball game with over 10 millions of global players. Click to see details.</p>
+                        </div>
+                    </div>
+
+                    <!-- Unnannounced PC Game Card -->
+                    <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('');" data-project="unnannounced-PC-Game">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                        <div class="relative p-6 h-full flex flex-col justify-end">
+                            <h3 class="font-orbitron text-2xl font-bold text-white">Unannounced PC Game</h3>
+                            <p class="text-sm text-indigo-400 mb-2">Unity, C#</p>
+                            <p class="text-gray-200">Contributing to unannounced PC game in Astrarium Games as part-time.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Personal & University Projects Section -->
+        <section id="personal" class="py-20 lg:py-32 bg-black bg-opacity-20">
+            <div class="container mx-auto px-6">
+                <h2 class="font-orbitron text-3xl lg:text-4xl font-bold text-center text-white mb-16 fade-in">Personal & University Projects</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/7TAbLyl.jpeg');" data-project="ai-pcg">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                        <div class="relative p-6 h-full flex flex-col justify-end">
+                            <h3 class="font-orbitron text-xl font-bold text-white">AI-Driven PCG Framework</h3>
+                            <p class="text-sm text-indigo-400 mb-2">Unreal Engine, C++, Blueprint</p>
+                            <p class="text-gray-200 text-sm">My Master's project developing an adaptive PCG framework in Unreal Engine. Click to see details.</p>
+                        </div>
+                    </div>
+                    
+                     <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/OvvXAtE.jpeg');" data-project="orbital-defenders">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                        <div class="relative p-6 h-full flex flex-col justify-end">
+                            <h3 class="font-orbitron text-xl font-bold text-white">Orbital Defenders</h3>
+                            <p class="text-sm text-indigo-400 mb-2">Unreal Engine 5, C++, Blueprint</p>
+                            <p class="text-gray-200 text-sm">A 3D space shooter built in Unreal Engine 5 for a GameDev.tv game jam. Click to see details.</p>
+                        </div>
+                    </div>
+
+                    <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/Pw1pwVp.jpeg');" data-project="all-or-nothing">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                        <div class="relative p-6 h-full flex flex-col justify-end">
+                            <h3 class="font-orbitron text-xl font-bold text-white">All or Nothing</h3>
+                            <p class="text-sm text-indigo-400 mb-2">Unity, C#</p>
+                            <p class="text-gray-200 text-sm">A fast-paced 2D roguelike action game with a casino theme. Click to see details.</p>
+                        </div>
+                    </div>
+
+                    <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/W4JM5AK.jpeg');" data-project="bubblegum-businessman">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                        <div class="relative p-6 h-full flex flex-col justify-end">
+                            <h3 class="font-orbitron text-xl font-bold text-white">Bubblegum Businessman</h3>
+                             <p class="text-sm text-indigo-400 mb-2">Unity, C#</p>
+                             <p class="text-gray-200 text-sm">A 2D pixel art game developed for Global Game Jam 2025 where I was the sole programmer. Click to see details.</p>
+                        </div>
+                    </div>
+                    
+                     <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/vvRWaQE.jpeg');" data-project="advanced-graphics">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                        <div class="relative p-6 h-full flex flex-col justify-end">
+                            <h3 class="font-orbitron text-xl font-bold text-white">Advanced Graphics</h3>
+                            <p class="text-sm text-indigo-400 mb-2">DirectX11, C++</p>
+                            <p class="text-gray-200 text-sm">Two advanced graphics apps in DirectX11 exploring PCG and post-processing. Click to see details.</p>
+                        </div>
+                    </div>
+                    
+                     <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/WYVDjhX.jpeg');" data-project="defiers-of-the-four">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                        <div class="relative p-6 h-full flex flex-col justify-end">
+                            <h3 class="font-orbitron text-xl font-bold text-white">Defiers of the Four</h3>
+                            <p class="text-sm text-indigo-400 mb-2">Windows API, C++</p>
+                            <p class="text-gray-200 text-sm">A co-op shooter built from scratch in C++ and the Windows API, without a game engine. Click to see details.</p>
+                        </div>
+                    </div>
+
+                    <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/a5cSWvz.jpeg');" data-project="chess-mate">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                        <div class="relative p-6 h-full flex flex-col justify-end">
+                            <h3 class="font-orbitron text-xl font-bold text-white">Chess Mate</h3>
+                            <p class="text-sm text-indigo-400 mb-2">Unity, C#</p>
+                            <p class="text-gray-200 text-sm">A 3D Tower Defense Real Time Strategy game, building core systems including game mechanics and AI behaviors. Click to see details.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 lg:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="font-orbitron text-3xl lg:text-4xl font-bold text-white mb-6 fade-in">Get In Touch</h2>
+                <p class="max-w-2xl mx-auto text-lg text-gray-300 mb-8 fade-in">
+                    I'm actively seeking new opportunities in the UK games industry. If you have a role that could be a good fit, or just want to connect, please feel free to reach out.
                 </p>
-              </div>
+                <a href="mailto:furkanbarisduyar@outlook.com" class="inline-block bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300 neon-glow-purple fade-in">
+                    Contact Me
+                </a>
             </div>
-            <div class="col-md-6">
-              <div class="service-item">
-                <div class="second-service-icon service-icon"></div>
-                <h4>Creative Ideas</h4>
-                <p>
-                  Proin lacus massa, eleifend sed fermentum in, dignissim vel
-                  metus. Nunc accumsan leo nec felis porttitor, ultricies
-                  faucibus purus mollis.
-                </p>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="service-item">
-                <div class="third-service-icon service-icon"></div>
-                <h4>Easy Customize</h4>
-                <p>
-                  Integer suscipit condimentum aliquet. Nam quis risus metus.
-                  Nullam faucibus quam eget arcu pretium tincidunt. Nam libero
-                  dui.
-                </p>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="service-item">
-                <div class="fourth-service-icon service-icon"></div>
-                <h4>Admin Dashboard</h4>
-                <p>
-                  Vivamus et dui a massa venenatis fringilla. Proin lacus massa,
-                  eleifend sed fermentum in, dignissim vel metus. Nunc accumsan
-                  leo nec felis porttitor.
-                </p>
-              </div>
-            </div>
-          </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-black bg-opacity-30 py-6">
+        <div class="container mx-auto px-6 text-center text-gray-400 text-sm">
+            <p>&copy; 2024 Furkan Barış Duyar. All Rights Reserved.</p>
+            <p class="mt-2">Designed & Built with Passion.</p>
         </div>
-      </section>
+    </footer>
 
-      <section class="section my-work" data-section="section3">
-        <div class="container">
-          <div class="section-heading">
-            <h2>My Work</h2>
-            <div class="line-dec"></div>
-            <span
-              >Aenean sollicitudin ex mauris, lobortis lobortis diam euismod sit
-              amet. Duis ac elit vulputate, lobortis arcu quis, vehicula
-              mauris.</span
-            >
-          </div>
-          <div class="row">
-            <div class="isotope-wrapper">
-              <form class="isotope-toolbar">
-                <label
-                  ><input
-                    type="radio"
-                    data-type="*"
-                    checked=""
-                    name="isotope-filter"
-                  />
-                  <span>all</span></label
-                >
-                <label
-                  ><input
-                    type="radio"
-                    data-type="people"
-                    name="isotope-filter"
-                  />
-                  <span>people</span></label
-                >
-                <label
-                  ><input
-                    type="radio"
-                    data-type="nature"
-                    name="isotope-filter"
-                  />
-                  <span>nature</span></label
-                >
-                <label
-                  ><input
-                    type="radio"
-                    data-type="animals"
-                    name="isotope-filter"
-                  />
-                  <span>animals</span></label
-                >
-              </form>
-              <div class="isotope-box">
-                <div class="isotope-item" data-type="nature">
-                  <figure class="snip1321">
-                    <img
-                      src="assets/images/my-work/portfolio-01.jpg"
-                      alt="sq-sample26"
-                    />
-                    <figcaption>
-                      <a
-                        href="assets/images/my-work/portfolio-01.jpg"
-                        data-lightbox="image-1"
-                        data-title="Caption"
-                        ><i class="fa fa-search"></i
-                      ></a>
-                      <h4>First Title</h4>
-                      <span>free to use our template</span>
-                    </figcaption>
-                  </figure>
-                </div>
-
-                <div class="isotope-item" data-type="people">
-                  <figure class="snip1321">
-                    <img
-                      src="assets/images/my-work/portfolio-02.jpg"
-                      alt="sq-sample26"
-                    />
-                    <figcaption>
-                      <a
-                        href="assets/images/my-work/portfolio-02.jpg"
-                        data-lightbox="image-1"
-                        data-title="Caption"
-                        ><i class="fa fa-search"></i
-                      ></a>
-                      <h4>Second Title</h4>
-                      <span>please tell your friends</span>
-                    </figcaption>
-                  </figure>
-                </div>
-
-                <div class="isotope-item" data-type="animals">
-                  <figure class="snip1321">
-                    <img
-                      src="assets/images/my-work/portfolio-03.jpg"
-                      alt="sq-sample26"
-                    />
-                    <figcaption>
-                      <a
-                        href="assets/images/my-work/portfolio-03.jpg"
-                        data-lightbox="image-1"
-                        data-title="Caption"
-                        ><i class="fa fa-search"></i
-                      ></a>
-                      <h4>Item Third</h4>
-                      <span>customize anything</span>
-                    </figcaption>
-                  </figure>
-                </div>
-
-                <div class="isotope-item" data-type="people">
-                  <figure class="snip1321">
-                    <img
-                      src="assets/images/my-work/portfolio-04.jpg"
-                      alt="sq-sample26"
-                    />
-                    <figcaption>
-                      <a
-                        href="assets/images/my-work/portfolio-04.jpg"
-                        data-lightbox="image-1"
-                        data-title="Caption"
-                        ><i class="fa fa-search"></i
-                      ></a>
-                      <h4>Item Fourth</h4>
-                      <span>Re-distribution not allowed</span>
-                    </figcaption>
-                  </figure>
-                </div>
-
-                <div class="isotope-item" data-type="nature">
-                  <figure class="snip1321">
-                    <img
-                      src="assets/images/my-work/portfolio-05.jpg"
-                      alt="sq-sample26"
-                    />
-                    <figcaption>
-                      <a
-                        href="assets/images/my-work/portfolio-05.jpg"
-                        data-lightbox="image-1"
-                        data-title="Caption"
-                        ><i class="fa fa-search"></i
-                      ></a>
-                      <h4>Fifth Awesome</h4>
-                      <span>Ut sollicitudin risus</span>
-                    </figcaption>
-                  </figure>
-                </div>
-
-                <div class="isotope-item" data-type="animals">
-                  <figure class="snip1321">
-                    <img
-                      src="assets/images/my-work/portfolio-06.jpg"
-                      alt="sq-sample26"
-                    />
-                    <figcaption>
-                      <a
-                        href="assets/images/my-work/portfolio-06.jpg"
-                        data-lightbox="image-1"
-                        data-title="Caption"
-                        ><i class="fa fa-search"></i
-                      ></a>
-                      <h4>Awesome Sixth</h4>
-                      <span>Donec eget massa ante</span>
-                    </figcaption>
-                  </figure>
-                </div>
-              </div>
-            </div>
-          </div>
+    <!-- Modal Structure -->
+    <div id="project-modal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-75 hidden">
+        <div id="modal-content" class="modal-content glass-effect rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto p-8 relative">
+            <button id="modal-close-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h2 id="modal-title" class="font-orbitron text-3xl font-bold text-white mb-4"></h2>
+            <div id="modal-gallery" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"></div>
+            <div id="modal-description" class="text-gray-300 space-y-4"></div>
         </div>
-      </section>
-
-      <section class="section contact-me" data-section="section4">
-        <div class="container">
-          <div class="section-heading">
-            <h2>Contact Me</h2>
-            <div class="line-dec"></div>
-            <span
-              >Fusce eget nibh nec justo interdum condimentum. Morbi justo ex,
-              efficitur at ante ac, tincidunt maximus ligula. Lorem ipsum dolor
-              sit amet, consectetur adipiscing elit.</span
-            >
-          </div>
-          <div class="row">
-            <div class="right-content">
-              <div class="container">
-                <form id="contact" action="" method="post">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <fieldset>
-                        <input
-                          name="name"
-                          type="text"
-                          class="form-control"
-                          id="name"
-                          placeholder="Your name..."
-                          required=""
-                        />
-                      </fieldset>
-                    </div>
-                    <div class="col-md-6">
-                      <fieldset>
-                        <input
-                          name="email"
-                          type="text"
-                          class="form-control"
-                          id="email"
-                          placeholder="Your email..."
-                          required=""
-                        />
-                      </fieldset>
-                    </div>
-                    <div class="col-md-12">
-                      <fieldset>
-                        <input
-                          name="subject"
-                          type="text"
-                          class="form-control"
-                          id="subject"
-                          placeholder="Subject..."
-                          required=""
-                        />
-                      </fieldset>
-                    </div>
-                    <div class="col-md-12">
-                      <fieldset>
-                        <textarea
-                          name="message"
-                          rows="6"
-                          class="form-control"
-                          id="message"
-                          placeholder="Your message..."
-                          required=""
-                        ></textarea>
-                      </fieldset>
-                    </div>
-                    <div class="col-md-12">
-                      <fieldset>
-                        <button type="submit" id="form-submit" class="button">
-                          Send Message
-                        </button>
-                      </fieldset>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
 
-    <!-- Scripts -->
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <script src="assets/js/isotope.min.js"></script>
-    <script src="assets/js/owl-carousel.js"></script>
-    <script src="assets/js/lightbox.js"></script>
-    <script src="assets/js/custom.js"></script>
     <script>
-      //according to loftblog tut
-      $(".main-menu li:first").addClass("active");
-
-      var showSection = function showSection(section, isAnimate) {
-        var direction = section.replace(/#/, ""),
-          reqSection = $(".section").filter(
-            '[data-section="' + direction + '"]'
-          ),
-          reqSectionPos = reqSection.offset().top - 0;
-
-        if (isAnimate) {
-          $("body, html").animate(
-            {
-              scrollTop: reqSectionPos
+        // --- DATA FOR PROJECT MODALS ---
+        const projectData = {
+	    'general-professional-work': {
+                title: 'General Information',
+                images: [
+                    'https://i.imgur.com/LExZ6fL.jpeg',
+                    'https://i.imgur.com/tsDQWKs.jpeg'
+                ],
+                description: `
+                    <p>Played a role in the development and enhancement of various features within the games produced by my former employer, Masomo. Subsequently, Masomo was acquired by Miniclip, a company owned by Tencent. Notably, I contributed to the development of features in games such as Head Ball 2 and Basketball Arena. These titles are available on mobile platforms, namely Google Play and the App Store. Both games were crafted using the Cocos2d-x framework and implemented in C++. My involvement spanned across diverse stages of the development process for these games.</p>
+                    <p>My key contributions:</p>
+                    <ul class="list-disc list-inside space-y-2 mt-2">
+                        <li>Addressed and resolved various bugs, while also developing and enhancing multiple features within the games. My active contributions have significantly impacted the overall quality and functionality of these projects. In the following sections, I will provide detailed descriptions of these processes categorized under each respective game title.</li>
+                        <li>Integrated several third-party components, including Frameplay, ANRWatchCat, Goliath, and IronSource, into both games. Furthermore, I incorporated Offerwall specifically for Basketball Arena. The code I developed facilitated the seamless release of all these components into both games simultaneously.</li>
+                        <li>Frameplay focuses on in-game advertisement billboards. In the gameplay screen, I implemented two billboards that display advertisements when available. In instances where advertisements are not accessible, the billboards dynamically showcase the player's nickname or team name. This strategic integration has effectively boosted advertisement earnings for the game.</li>
+                        <li>ANRWatchCat is designed for crash and ANR detection on Android devices. To seamlessly integrate this functionality, I had to convert existing C# code into C++. This integration has proven instrumental in reducing crash and ANR rates, as it offers an effective mechanism to detect and handle these issues with greater ease.</li>
+                        <li>Goliath is focused on A/B testing, offering the ability to streamline and optimize features by categorizing them effectively. Through its implementation, it has ensured the provision of proper and more efficient features in the games.</li>
+                        <li>IronSource specializes in interstitial and rewarded advertisements. Its integration into the games has significantly bolstered advertisement earnings, enhancing the overall revenue generated through these advertising formats.</li>
+                    <p>Currently contributing to unannounced PC game in Astrarium Games as part-time.</p>
+		    <p>Please check individual cards for further details.</p>
+                    </ul>
+                `
             },
-            800
-          );
-        } else {
-          $("body, html").scrollTop(reqSectionPos);
+            'head-ball-2': {
+                title: 'Head Ball 2',
+                images: [
+                    'https://i.imgur.com/HJXRHf6.jpeg',
+                    'https://i.imgur.com/LExZ6fL.jpeg'
+                ],
+                description: `
+                    <p>This game stands out as a casual 1 vs 1 online multiplayer football experience with a global reach, attracting over 100 millions of players worldwide. Serving as a flagship title for Masomo, it has garnered widespread popularity and engagement across diverse communities.</p>
+                    <p>My key contributions:</p>
+                    <ul class="list-disc list-inside space-y-2 mt-2">
+                        <li>Modified the logic governing the creation order of automatic popups, a task that proved challenging due to its dependence on numerous interconnected logics. This required a meticulous approach to ensure the smooth transition, considering the intricate dependencies. Despite the complexity, I navigated the adjustments with care and precision, ultimately achieving a successful implementation.</li>
+                        <li>Implemented changes to the default characters in a more generalized manner, a task that posed challenges due to the dispersed nature of character configurations across various locations. Navigating through these diverse locations and identifying the correct parameters required careful attention. Despite the complexity, I managed to locate and modify them successfully, ensuring a more streamlined and cohesive configuration for the default characters.</li>
+                        <li>Integrated various third-party components, as detailed in the general information.</li>
+                    </ul>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="https://apps.apple.com/gb/app/head-ball-2-football-game/id1193933380" target="_blank" class="flex-1 text-center bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg transition">App Store</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.masomo.headball2" target="_blank" class="flex-1 text-center bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition">Google Play</a>
+                    </div>
+                `
+            },
+            'basketball-arena': {
+                title: 'Basketball Arena',
+                images: [
+                    'https://i.imgur.com/76KfJ8A.jpeg',
+                    'https://i.imgur.com/tsDQWKs.jpeg'
+                ],
+                description: `
+                    <p>This game is a casual 1 vs 1 online multiplayer basketball experience, attracting over 10 millions of players globally. I initiated this project from its inception when I joined Masomo, building it from the ground up.</p>
+                    <p>My key contributions:</p>
+                    <ul class="list-disc list-inside space-y-2 mt-2">
+                        <li>Implemented various user interface features, including career, leaderboard, social, news, ring league, consecutive rewards, inbox, mega league, season, and reward vault.</li>
+                        <li>Introduced additional features, including the option to purchase superpowers during gameplay and the integration of new character animations.</li>
+                        <li>Integrated several third-party components, as mentioned earlier. In addition to those, I have also integrated Offerwall for this game.</li>
+                        <li>Offerwall involves in-app advertisements for other games, where users can complete tasks to earn game currency for other games within the platform.</li>
+                        <li>Implemented necessary dependencies and made changes to facilitate the publication of this game on Facebook Cloud.</li>
+                    </ul>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="https://apps.apple.com/gb/app/basketball-arena-sports-game/id1491198695" target="_blank" class="flex-1 text-center bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg transition">App Store</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.masomo.basketballarena" target="_blank" class="flex-1 text-center bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition">Google Play</a>
+                    </div>
+                `
+            },
+            'unnannounced-PC-Game': {
+                title: 'Unnannounced PC Game',
+                images: [
+                    ''
+                ],
+                description: `
+                    <p>No details yet!</p>
+                `
+            },
+             'ai-pcg': {
+                title: 'AI-Driven PCG Framework',
+                images: ['https://i.imgur.com/7TAbLyl.jpeg'],
+                description: `<p>Currently developing an AI-Driven PCG framework on Unreal Engine for my master's project in Abertay University. This framework will be used for third person shooter games to make adaptive and context sensitive environments.</p>`
+            },
+            'orbital-defenders': {
+                title: 'Orbital Defenders',
+                images: ['https://i.imgur.com/OvvXAtE.jpeg'],
+                description: `<p>This is a 3D space shooter game developed on the Unreal Engine 5 using Blueprint and C++. It emerged as a project with 2 programmers, including myself, in the GameDev.tv Game Jam 2025.</p><a href="https://peacehears.itch.io/orbital-defenders" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold text-sm inline-block mt-4">View on Itch.io →</a>`
+            },
+            'all-or-nothing': {
+                title: 'All or Nothing',
+                images: ['https://i.imgur.com/Pw1pwVp.jpeg'],
+                description: `
+                    <p>The game is 2D top-down roguelike fast-paced action style that is played using playing cards. Gameplay is similar to Enter the Gungeon game elements. The player navigates levels from a bird's-eye view. The player plays the game in a casino theme with slot machines and poker tables. The game features randomized enemies, different maps, rooms as well as dynamic card decks that make each playthrough unique. Permadeath is a key element, meaning that once the player dies, they lose all progress and must start over, which raises the stakes and encourages careful planning and quick reflexes. Combat is intense, requiring players to dodge enemy attacks while shooting, slashing and managing a variety of attack styles. With challenging boss fights, and constant randomness, the game offers a high-replayability experience that tests both strategy and skill as the player must use each run to improve and get further through the casino.</p>
+                    <p>This game was developed at Abertay University.</p>
+                    <a href="https://peacehears.itch.io/all-or-nothing" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold text-sm inline-block mt-4">View on Itch.io →</a>
+                `
+            },
+            'bubblegum-businessman': {
+                title: 'Bubblegum Businessman',
+                images: ['https://i.imgur.com/W4JM5AK.jpeg'],
+                description: `<p>This is a 2D pixel art game. It was developed on the Unity using C#, it emerged as a project with 1 programmer (me) and 4 artists in Global Game Jam 2025 at Abertay University.</p><a href="https://peacehears.itch.io/bubblegum-businessman" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold text-sm inline-block mt-4">View on Itch.io →</a>`
+            },
+            'advanced-graphics': {
+                title: 'Advanced Graphics with DirectX11',
+                images: [
+                    'https://i.imgur.com/vvRWaQE.jpeg',
+                    'https://i.imgur.com/lJhmgeZ.jpeg'
+                    ],
+                description: `
+                    <p>Developed two advanced graphics applications using DirectX11 and C++ at Abertay University.</p>
+                     <p class="font-bold mt-4">Night Street View with Aurora:</p>
+                    <p>The application was built with some features and techniques to demonstrate a night street view including an Aurora Borealis (Northern Lights). Two main parts (land and sky) and their pieces are rendered on the scene. Whole scene is created using render to texture technique to reduce the cost of dynamic effects, handle post processing effects, save resources with pre rendered background and simplify rendering pipeline.</p>
+                    <p class="font-bold mt-4">Advanced Procedural Game:</p>
+                    <p>This program is a sophisticated terrain and object interaction simulation game developed using DirectX11. The game showcases an elaborate terrain system capable of generating procedural landscapes with multiple customization options. The main features of the program are:</p>
+                    <ul class="list-disc list-inside space-y-2 mt-2">
+                        <li>Procedural Terrain Generation: The terrain is procedurally generated with various methods, including smoothing, faulting, and Perlin noise (Flafla2 2014), allowing for complex and diverse landscapes.</li>
+                        <li>Voronoi Regions: The terrain further divides into Voronoi regions colored differently, which provides visual cues for gameplay objectives.</li>
+                        <li>Object Interaction: The game features interactive objects scattered throughout the terrain. These objects change colors upon interaction based on predefined rules.</li>
+                        <li>Drone Player Control: The player controls a drone, which can fly across the terrain. The drone’s colors change upon interacting with the terrain regions.</li>
+                        <li>Game Objectives: The goal is to match object colors with the current region color. Upon matching all the colors, the player advances to the next level.</li>
+                    </ul>
+                `
+            },
+            'defiers-of-the-four': {
+                title: 'Defiers of the Four',
+                images: [
+                    'https://i.imgur.com/WYVDjhX.jpeg',
+                    'https://i.imgur.com/Ct4be3S.jpeg'
+                    ],
+                description: `
+                    <p>This game is an action-packed top-down experience designed for cooperative play. Developed on the Windows API using C++, it emerged as a project during our time in the Computer Game Design and Programming class at Dokuz Eylul University. Our instructor challenged us to create a game without relying on a game engine, prompting my college friends and me to collaboratively craft a distinctive and innovative gaming experience.</p>
+                    <p>The game features four ally robots, and at the beginning of the game, users get to choose the model of the robot they will control. Player 1 and Player 2 are each assigned control of one robot at a time, with the computer taking control of the remaining robot. Players have the flexibility to switch between robots at any point during gameplay.</p>
+                    <p>The game incorporates two types of fog. The first type, characterized by a gray color, is employed to define the field of view, allowing players to see enemies. This fog is positioned closer to the player than the second type. The second type of fog, distinguished by its black color, is utilized to establish the overall field of view for the entire game environment.</p>
+                    <p>The game features various types of enemies that can spawn from their basements and launch attacks on the players at any given time. I dedicated significant effort to crafting the artificial intelligence logic for these enemies, enhancing their behavior and making their interactions with players more dynamic and challenging.</p>
+                    <p>Robots transition to a 'fallen' status when their health points reach zero. In this state, they become immobile and unable to attack. An ally has the ability to assist fallen robots and revive them. However, if a robot remains in the fallen state for an extended period, it will eventually die, and restoration becomes possible only upon reaching the next level or restarting the game. If all ally robots perish within a level, the game concludes, necessitating a restart of the current level.</p>
+                    <p>Every robot is equipped with a unique weapon, which is internally mounted, preventing them from switching to alternative weapons. Each weapon comes with a limited ammo supply, and at the start of each level, robots are provided with a set amount of ammunition. Players can replenish their ammo by collecting it from fallen enemies. When a robot exhausts its ammo, the corresponding weapon becomes significantly less effective than its normal state.</p>
+                    <p>Movement for both players and enemies is restricted by obstacles, and these obstacles serve as protection against bullets, functioning as effective cover. Certain obstacles can be destroyed using various methods, adding an element of strategy and dynamic gameplay to the overall experience.</p>
+                    <p>At the ultimate level, players face a formidable boss enemy. Victory is achieved upon successfully defeating this challenging adversary.</p>
+                `
+            },
+            'chess-mate': {
+                title: 'Chess Mate',
+                images: [
+                    'https://i.imgur.com/a5cSWvz.jpeg'
+                    ],
+                description: `
+                    <p>This game combines the classic elements of chess with additional rules and introduces unique enemies to create a distinct gaming experience. Players select their soldiers, each representing a specific chess piece with its respective rules, before the game commences. The gameplay unfolds on a traditional chess board, and the challenge lies in employing chess rules to engage with both the chosen soldiers and various waves of enemies. Positioned behind the board is a castle that players must defend throughout the game.</p>
+                `
+            }
+        };
+
+        // --- HERO CANVAS SCRIPT ---
+        const canvas = document.querySelector('.hero-canvas');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+        let columns = Math.floor(width / 20);
+        let drops = Array(columns).fill(1);
+        // Updated character set with more compatible game symbols
+        const characters = '01×▲■●';
+
+        function draw() {
+            ctx.fillStyle = 'rgba(10, 10, 26, 0.05)';
+            ctx.fillRect(0, 0, width, height);
+            ctx.fillStyle = '#4f46e5';
+            ctx.font = '15px monospace';
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters[Math.floor(Math.random() * characters.length)];
+                ctx.fillText(text, i * 20, drops[i] * 20);
+                if (drops[i] * 20 > height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
         }
-      };
-
-      var checkSection = function checkSection() {
-        $(".section").each(function() {
-          var $this = $(this),
-            topEdge = $this.offset().top - 80,
-            bottomEdge = topEdge + $this.height(),
-            wScroll = $(window).scrollTop();
-          if (topEdge < wScroll && bottomEdge > wScroll) {
-            var currentId = $this.data("section"),
-              reqLink = $("a").filter("[href*=\\#" + currentId + "]");
-            reqLink
-              .closest("li")
-              .addClass("active")
-              .siblings()
-              .removeClass("active");
-          }
+        setInterval(draw, 33);
+        
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            columns = Math.floor(width / 20);
+            drops = Array(columns).fill(1);
         });
-      };
 
-      $(".main-menu").on("click", "a", function(e) {
-        e.preventDefault();
-        showSection($(this).attr("href"), true);
-      });
+        // --- ANIMATIONS & MODAL LOGIC ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Smooth Scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
 
-      $(window).scroll(function() {
-        checkSection();
-      });
+            // GSAP Fade-in animations on scroll
+            gsap.registerPlugin(ScrollTrigger);
+            document.querySelectorAll('.fade-in').forEach((el) => {
+                gsap.to(el, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top 85%',
+                        toggleActions: 'play none none none',
+                    }
+                });
+            });
+
+            // Modal Logic
+            const modal = document.getElementById('project-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalGallery = document.getElementById('modal-gallery');
+            const modalDescription = document.getElementById('modal-description');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const projectId = card.dataset.project;
+                    const data = projectData[projectId];
+
+                    if (data) {
+                        modalTitle.textContent = data.title;
+                        
+                        modalGallery.innerHTML = '';
+                        data.images.forEach(src => {
+                            const img = document.createElement('img');
+                            img.src = src;
+                            img.alt = data.title;
+                            img.className = 'rounded-lg w-full object-cover';
+                            img.onerror = () => img.src = `https://placehold.co/600x400/1a1a2e/e0e0e0?text=${data.title.replace(' ','+')}`;
+                            modalGallery.appendChild(img);
+                        });
+
+                        modalDescription.innerHTML = data.description;
+                        
+                        modal.classList.remove('hidden');
+                        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+                    }
+                });
+            });
+
+            const closeModal = () => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            };
+
+            modalCloseBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        });
+
     </script>
-  </body>
+</body>
 </html>
