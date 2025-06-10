@@ -13,7 +13,7 @@ body {
 }
 
 #page-wraper {
-    background: url(../images/page-bg.jpg) no-repeat center center fixed;
+    background: url(../images/background/page-bg.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -435,35 +435,35 @@ button:hover {
 }
 
 .service-item .first-service-icon {
-    background-image: url(../images/first-white-icon.png);
+    background-image: url(../images/what-i-m-good-at/first-white-icon.png);
 }
 
 .service-item:hover .first-service-icon {
-    background-image: url(../images/first-main-icon.png);
+    background-image: url(../images/what-i-m-good-at/first-main-icon.png);
 }
 
 .service-item .second-service-icon {
-    background-image: url(../images/second-white-icon.png);
+    background-image: url(../images/what-i-m-good-at/second-white-icon.png);
 }
 
 .service-item:hover .second-service-icon {
-    background-image: url(../images/second-main-icon.png);
+    background-image: url(../images/what-i-m-good-at/second-main-icon.png);
 }
 
 .service-item .third-service-icon {
-    background-image: url(../images/third-white-icon.png);
+    background-image: url(../images/what-i-m-good-at/third-white-icon.png);
 }
 
 .service-item:hover .third-service-icon {
-    background-image: url(../images/third-main-icon.png);
+    background-image: url(../images/what-i-m-good-at/third-main-icon.png);
 }
 
 .service-item .fourth-service-icon {
-    background-image: url(../images/fourth-white-icon.png);
+    background-image: url(../images/what-i-m-good-at/fourth-white-icon.png);
 }
 
 .service-item:hover .fourth-service-icon {
-    background-image: url(../images/fourth-main-icon.png);
+    background-image: url(../images/what-i-m-good-at/fourth-main-icon.png);
 }
 
 
