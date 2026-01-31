@@ -8,8 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         /* Custom Styles for the 'Fancy' Game Dev Look */
@@ -115,7 +115,7 @@
                 <div class="hidden md:flex items-center space-x-6">
                     <a href="#about" class="text-gray-300 hover:text-indigo-400 transition">About</a>
                     <a href="#professional" class="text-gray-300 hover:text-indigo-400 transition border-l border-gray-600 pl-6">Professional Work</a>
-                    <a href="#personal" class="text-gray-300 hover:text-indigo-400 transition border-l border-gray-600 pl-6 whitespace-nowrap">Personal & University Projects</a>
+                    <a href="#personal" class="text-gray-300 hover:text-indigo-400 transition border-l border-gray-600 pl-6 whitespace-nowrap">Projects</a>
                     <a href="#contact" class="text-gray-300 hover:text-indigo-400 transition border-l border-gray-600 pl-6">Contact</a>
                 </div>
                 <!-- Mobile Menu Button -->
@@ -137,7 +137,7 @@
             <div class="flex flex-col items-center justify-center h-full -mt-16 space-y-8">
                 <a href="#about" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400 transition">About</a>
                 <a href="#professional" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400 transition">Professional Work</a>
-                <a href="#personal" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400 transition">Personal & University Projects</a>
+                <a href="#personal" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400 transition">Projects</a>
                 <a href="#contact" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400 transition">Contact</a>
             </div>
         </div>
@@ -175,7 +175,7 @@
                             A passionate game developer with commercial experience at studios like Masomo/Miniclip, contributing to flagship mobile titles played by over 110 million players. My journey began at university, building games in Unity/C#, and has since evolved to mastering C++ with Cocos2d-x and now Unreal Engine 5. 
                         </p>
                         <p class="text-lg text-gray-300 fade-in">
-                            I am currently pursuing an MSc in Computer Games Technology at Abertay University, UK, where I'm diving deep into advanced graphics with DirectX11 and AI-driven procedural content generation. I thrive on solving complex technical challenges and building immersive gaming experiences from the ground up.
+                            I graduated with an MSc in Computer Games Technology from Abertay University, UK, where I dived deep into advanced graphics with DirectX11 and AI-driven procedural content generation. I thrive on solving complex technical challenges and building immersive gaming experiences from the ground up.
                         </p>
                     </div>
                 </div>
@@ -203,18 +203,21 @@
                 <div class="container mx-auto px-6">
                     <h2 class="font-orbitron text-3xl lg:text-4xl font-bold text-center text-white mb-12 fade-in">Professional Work</h2>
                     <div class="max-w-3xl mx-auto text-center mb-16">
+                        <p class="text-lg text-gray-300 fade-in mb-4">
+                            I have contributed to flagship 1v1 online sport games at Masomo/Miniclip, reaching over 110 million global players. I've worked across the full development cycle using C++ and Cocos2d-x, integrating key SDKs for advertising, crash detection, and A/B testing. 
+                        </p>
                         <p class="text-lg text-gray-300 fade-in">
-                            I have contributed to flagship 1v1 online sport games at Masomo/Miniclip, reaching over 110 million global players. I've worked across the full development cycle using C++ and Cocos2d-x, integrating key SDKs for advertising, crash detection, and A/B testing. Currently, I am also contributing to an unannounced PC game at Astrarium Games in a part-time role.
+                            Currently, I am providing freelance consultancy for technical optimization and feature development using Unity, and I previously contributed to an unannounced PC game at Astrarium Games.
                         </p>
                     </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         <!-- Head Ball 2 Card -->
                         <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/LExZ6fL.jpeg');" data-project="head-ball-2">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
                             <div class="relative p-6 h-full flex flex-col justify-end">
-                                <h3 class="font-orbitron text-2xl font-bold text-white">Head Ball 2</h3>
-                                <p class="text-sm text-indigo-400 mb-2">Cocos2d-x, C++, Java, Objective-C</p>
-                                <p class="text-gray-200">A flagship 1v1 football game with over 100 million players worldwide.</p>
+                                <h3 class="font-orbitron text-xl font-bold text-white">Head Ball 2</h3>
+                                <p class="text-xs text-indigo-400 mb-2">Cocos2d-x, C++, Java, Objective-C</p>
+                                <p class="text-gray-200 text-sm">A flagship 1v1 football game with over 100 million players worldwide.</p>
                             </div>
                         </div>
                         
@@ -222,32 +225,42 @@
                         <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/tsDQWKs.jpeg');" data-project="basketball-arena">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
                             <div class="relative p-6 h-full flex flex-col justify-end">
-                                <h3 class="font-orbitron text-2xl font-bold text-white">Basketball Arena</h3>
-                                <p class="text-sm text-indigo-400 mb-2">Cocos2d-x, C++, Java, Objective-C</p>
-                                <p class="text-gray-200">A 1v1 online basketball game with over 10 million global players.</p>
+                                <h3 class="font-orbitron text-xl font-bold text-white">Basketball Arena</h3>
+                                <p class="text-xs text-indigo-400 mb-2">Cocos2d-x, C++, Java, Objective-C</p>
+                                <p class="text-gray-200 text-sm">A 1v1 online basketball game with over 10 million global players.</p>
+                            </div>
+                        </div>
+
+                        <!-- Game Dev Consultant Card -->
+                        <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80');" data-project="freelance-consultant">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                            <div class="relative p-6 h-full flex flex-col justify-end">
+                                <h3 class="font-orbitron text-xl font-bold text-white">Game Dev Consultant</h3>
+                                <p class="text-xs text-indigo-400 mb-2">Unity, C#, Java, Objective-C</p>
+                                <p class="text-gray-200 text-sm">Freelance consultancy focused on technical optimization and cross-platform integrations.</p>
                             </div>
                         </div>
 
                         <!-- Unnannounced PC Game Card -->
-                        <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('');" data-project="unnannounced-PC-Game">
+                        <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80');" data-project="unnannounced-PC-Game">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
                             <div class="relative p-6 h-full flex flex-col justify-end">
-                                <h3 class="font-orbitron text-2xl font-bold text-white">Unannounced PC Game</h3>
-                                <p class="text-sm text-indigo-400 mb-2">Unity, C#</p>
-                                <p class="text-gray-200">Currently contributing to an unannounced PC title at Astrarium Games.</p>
+                                <h3 class="font-orbitron text-xl font-bold text-white">Unannounced PC Game</h3>
+                                <p class="text-xs text-indigo-400 mb-2">Unity, C#</p>
+                                <p class="text-gray-200 text-sm">Contributed to an unannounced PC title at Astrarium Games.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Personal & University Projects Section -->
+            <!-- Projects Section -->
             <section id="personal" class="py-20 lg:py-32">
                 <div class="container mx-auto px-6">
-                    <h2 class="font-orbitron text-3xl lg:text-4xl font-bold text-center text-white mb-12 fade-in">Personal & University Projects</h2>
+                    <h2 class="font-orbitron text-3xl lg:text-4xl font-bold text-center text-white mb-12 fade-in">Projects</h2>
                     <div class="max-w-3xl mx-auto text-center mb-16">
                         <p class="text-lg text-gray-300 fade-in">
-                            My game development journey began at Dokuz Eylul University, where collaborative projects first sparked my passion. Since then, I've continuously fueled that passion through solo projects and game jams, always pushing to learn and innovate. This drive for deeper expertise led me to pursue an MSc in Computer Games Technology at the renowned Abertay University, where I've been exploring advanced development concepts.
+                            My game development journey began at Dokuz Eylul University, where collaborative projects first sparked my passion. Since then, I've continuously fueled that passion through solo projects and game jams, always pushing to learn and innovate. This drive for deeper expertise led me to complete an MSc in Computer Games Technology at the renowned Abertay University, where I've explored advanced development concepts.
                         </p>
                     </div>
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -288,12 +301,23 @@
                             </div>
                         </div>
                         
-                         <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/vvRWaQE.jpeg');" data-project="advanced-graphics">
+                         <!-- NEW CARD 1: Night Street View with Aurora -->
+                         <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/vvRWaQE.jpeg');" data-project="night-street-aurora">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
                             <div class="relative p-6 h-full flex flex-col justify-end">
-                                <h3 class="font-orbitron text-xl font-bold text-white">Advanced Graphics</h3>
+                                <h3 class="font-orbitron text-xl font-bold text-white">Night Street View with Aurora</h3>
                                 <p class="text-sm text-indigo-400 mb-2">DirectX11, C++</p>
-                                <p class="text-gray-200 text-sm">Two advanced graphics apps in DirectX11 exploring PCG and post-processing. Click to see details.</p>
+                                <p class="text-gray-200 text-sm">An advanced graphics demo featuring Render-to-Texture, post-processing, and dynamic lighting. Click to see details.</p>
+                            </div>
+                        </div>
+
+                        <!-- NEW CARD 2: Advanced Procedural Game -->
+                        <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/lJhmgeZ.jpeg');" data-project="advanced-procedural-game">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                            <div class="relative p-6 h-full flex flex-col justify-end">
+                                <h3 class="font-orbitron text-xl font-bold text-white">Advanced Procedural Game</h3>
+                                <p class="text-sm text-indigo-400 mb-2">DirectX11, C++</p>
+                                <p class="text-gray-200 text-sm">A procedural terrain engine using Perlin noise, Voronoi diagrams, and L-System fractals. Click to see details.</p>
                             </div>
                         </div>
                         
@@ -362,6 +386,10 @@
                     'https://i.imgur.com/LExZ6fL.jpeg'
                 ],
                 description: `
+                    <div class="flex space-x-4 mb-6">
+                        <a href="https://apps.apple.com/gb/app/head-ball-2-football-game/id1193933380" target="_blank" class="flex-1 text-center bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg transition">App Store</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.masomo.headball2" target="_blank" class="flex-1 text-center bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition">Google Play</a>
+                    </div>
                     <p>This game stands out as a casual 1 vs 1 online multiplayer football experience with a global reach, attracting over 100 millions of players worldwide. Serving as a flagship title for Masomo, it has garnered widespread popularity and engagement across diverse communities.</p>
                     <p>My key contributions:</p>
                     <ul class="list-disc list-inside space-y-2 mt-2">
@@ -369,10 +397,6 @@
                         <li>Implemented changes to the default characters in a more generalized manner, a task that posed challenges due to the dispersed nature of character configurations across various locations. Navigating through these diverse locations and identifying the correct parameters required careful attention. Despite the complexity, I managed to locate and modify them successfully, ensuring a more streamlined and cohesive configuration for the default characters.</li>
                         <li>Integrated various third-party components, such as Frameplay, ANRWatchCat, Goliath, and IronSource.</li>
                     </ul>
-                    <div class="flex space-x-4 mt-6">
-                        <a href="https://apps.apple.com/gb/app/head-ball-2-football-game/id1193933380" target="_blank" class="flex-1 text-center bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg transition">App Store</a>
-                        <a href="https://play.google.com/store/apps/details?id=com.masomo.headball2" target="_blank" class="flex-1 text-center bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition">Google Play</a>
-                    </div>
                 `
             },
             'basketball-arena': {
@@ -382,6 +406,10 @@
                     'https://i.imgur.com/tsDQWKs.jpeg'
                 ],
                 description: `
+                    <div class="flex space-x-4 mb-6">
+                        <a href="https://apps.apple.com/gb/app/basketball-arena-sports-game/id1491198695" target="_blank" class="flex-1 text-center bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg transition">App Store</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.masomo.basketballarena" target="_blank" class="flex-1 text-center bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition">Google Play</a>
+                    </div>
                     <p>This game is a casual 1 vs 1 online multiplayer basketball experience, attracting over 10 millions of players globally. I initiated this project from its inception when I joined Masomo, building it from the ground up.</p>
                     <p>My key contributions:</p>
                     <ul class="list-disc list-inside space-y-2 mt-2">
@@ -389,63 +417,96 @@
                         <li>Introduced additional features, including the option to purchase superpowers during gameplay and the integration of new character animations.</li>
                         <li>Integrated several third-party components, including Offerwall and implemented necessary dependencies to publish the game on Facebook Cloud.</li>
                     </ul>
-                    <div class="flex space-x-4 mt-6">
-                        <a href="https://apps.apple.com/gb/app/basketball-arena-sports-game/id1491198695" target="_blank" class="flex-1 text-center bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg transition">App Store</a>
-                        <a href="https://play.google.com/store/apps/details?id=com.masomo.basketballarena" target="_blank" class="flex-1 text-center bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition">Google Play</a>
-                    </div>
+                `
+            },
+            'freelance-consultant': {
+                title: 'Game Development Consultant',
+                images: [
+                    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80'
+                ],
+                description: `
+                    <p>As a freelance Game Development Consultant, I leverage my experience with high-scale titles to help studios optimize their technical infrastructure and expand their reach.</p>
+                    <p>Core Expertise:</p>
+                    <ul class="list-disc list-inside space-y-2 mt-2">
+                        <li><strong>Technical Optimization:</strong> Improving performance and memory footprint in Unity-based projects for mobile and PC.</li>
+                        <li><strong>Cross-Platform Development:</strong> Implementing platform-specific features using Java (Android) and Objective-C (iOS).</li>
+                        <li><strong>SDK Integration:</strong> Expert integration of monetization (IronSource), analytics, and crash reporting tools.</li>
+                        <li><strong>Refactoring & Architecture:</strong> Modernizing legacy C# codebases to improve maintainability and scalability.</li>
+                    </ul>
                 `
             },
             'unnannounced-PC-Game': {
                 title: 'Unnannounced PC Game',
                 images: [
-                    ''
+                    'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80'
                 ],
                 description: `
-                    <p>No details yet!</p>
+                    <p>Contributed to an unannounced PC title at Astrarium Games using Unity and C#. Responsibilities included implementing core gameplay systems and collaborative feature development.</p>
                 `
             },
              'ai-pcg': {
                 title: 'AI-Driven PCG Framework',
                 images: ['https://i.imgur.com/7TAbLyl.jpeg'],
-                description: `<p>Currently developing an AI-Driven PCG framework on Unreal Engine for my master's project in Abertay University. This framework will be used for third person shooter games to make adaptive and context sensitive environments.</p>`
+                description: `<p>Developed an AI-Driven PCG framework on Unreal Engine for my Master's project at Abertay University. This framework is designed for third-person shooter games to create adaptive and context-sensitive environments.</p>`
             },
             'orbital-defenders': {
                 title: 'Orbital Defenders',
                 images: ['https://i.imgur.com/OvvXAtE.jpeg'],
-                description: `<p>This is a 3D space shooter game developed on the Unreal Engine 5 using Blueprint and C++. It emerged as a project with 2 programmers, including myself, in the GameDev.tv Game Jam 2025.</p><a href="https://peacehears.itch.io/orbital-defenders" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold text-sm inline-block mt-4">View on Itch.io →</a>`
+                description: `
+                    <a href="https://peacehears.itch.io/orbital-defenders" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold text-sm inline-block mb-4">View on Itch.io →</a>
+                    <p>This is a 3D space shooter game developed on the Unreal Engine 5 using Blueprint and C++. It emerged as a project with 2 programmers, including myself, in the GameDev.tv Game Jam 2025.</p>
+                `
             },
             'all-or-nothing': {
                 title: 'All or Nothing',
                 images: ['https://i.imgur.com/Pw1pwVp.jpeg'],
                 description: `
+                    <a href="https://peacehears.itch.io/all-or-nothing" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold text-sm inline-block mb-4">View on Itch.io →</a>
                     <p>The game is 2D top-down roguelike fast-paced action style that is played using playing cards. Gameplay is similar to Enter the Gungeon game elements. The player navigates levels from a bird's-eye view. The player plays the game in a casino theme with slot machines and poker tables. The game features randomized enemies, different maps, rooms as well as dynamic card decks that make each playthrough unique. Permadeath is a key element, meaning that once the player dies, they lose all progress and must start over, which raises the stakes and encourages careful planning and quick reflexes. Combat is intense, requiring players to dodge enemy attacks while shooting, slashing and managing a variety of attack styles. With challenging boss fights, and constant randomness, the game offers a high-replayability experience that tests both strategy and skill as the player must use each run to improve and get further through the casino.</p>
                     <p>This game was developed at Abertay University.</p>
-                    <a href="https://peacehears.itch.io/all-or-nothing" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold text-sm inline-block mt-4">View on Itch.io →</a>
                 `
             },
             'bubblegum-businessman': {
                 title: 'Bubblegum Businessman',
                 images: ['https://i.imgur.com/W4JM5AK.jpeg'],
-                description: `<p>This is a 2D pixel art game. It was developed on the Unity using C#, it emerged as a project with 1 programmer (me) and 4 artists in Global Game Jam 2025 at Abertay University.</p><a href="https://peacehears.itch.io/bubblegum-businessman" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold text-sm inline-block mt-4">View on Itch.io →</a>`
-            },
-            'advanced-graphics': {
-                title: 'Advanced Graphics with DirectX11',
-                images: [
-                    'https://i.imgur.com/vvRWaQE.jpeg',
-                    'https://i.imgur.com/lJhmgeZ.jpeg'
-                    ],
                 description: `
-                    <p>Developed two advanced graphics applications using DirectX11 and C++ at Abertay University.</p>
-                     <p class="font-bold mt-4">Night Street View with Aurora:</p>
-                    <p>The application was built with some features and techniques to demonstrate a night street view including an Aurora Borealis (Northern Lights). Two main parts (land and sky) and their pieces are rendered on the scene. Whole scene is created using render to texture technique to reduce the cost of dynamic effects, handle post processing effects, save resources with pre rendered background and simplify rendering pipeline.</p>
-                    <p class="font-bold mt-4">Advanced Procedural Game:</p>
-                    <p>This program is a sophisticated terrain and object interaction simulation game developed using DirectX11. The game showcases an elaborate terrain system capable of generating procedural landscapes with multiple customization options. The main features of the program are:</p>
+                    <a href="https://peacehears.itch.io/bubblegum-businessman" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold text-sm inline-block mb-4">View on Itch.io →</a>
+                    <p>This is a 2D pixel art game. It was developed on the Unity using C#, it emerged as a project with 1 programmer (me) and 4 artists in Global Game Jam 2025 at Abertay University.</p>
+                `
+            },
+            'night-street-aurora': {
+                title: 'Night Street View with Aurora',
+                images: [
+                    'https://i.imgur.com/vvRWaQE.jpeg'
+                ],
+                description: `
+                    <a href="https://youtu.be/3eNjzeNT3nE?si=xM5qOgHoQ_AX3r1D" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold text-sm inline-block mb-4">Watch Project Footage on YouTube →</a>
+                    <p>The application was built with features and techniques to demonstrate a night street view including an Aurora Borealis (Northern Lights). Two main parts (land and sky) and their pieces are rendered on the scene.</p>
+                    <p><strong>Key Technical Features:</strong></p>
                     <ul class="list-disc list-inside space-y-2 mt-2">
-                        <li>Procedural Terrain Generation: The terrain is procedurally generated with various methods, including smoothing, faulting, and Perlin noise (Flafla2 2014), allowing for complex and diverse landscapes.</li>
-                        <li>Voronoi Regions: The terrain further divides into Voronoi regions colored differently, which provides visual cues for gameplay objectives.</li>
-                        <li>Object Interaction: The game features interactive objects scattered throughout the terrain. These objects change colors upon interaction based on predefined rules.</li>
-                        <li>Drone Player Control: The player controls a drone, which can fly across the terrain. The drone’s colors change upon interacting with the terrain regions.</li>
-                        <li>Game Objectives: The goal is to match object colors with the current region color. Upon matching all the colors, the player advances to the next level.</li>
+                        <li><strong>Render to Texture:</strong> The whole scene is created using render to texture technique to reduce the cost of dynamic effects, handle post-processing effects, save resources with pre-rendered backgrounds, and simplify the rendering pipeline.</li>
+                        <li><strong>Post-Processing:</strong> Implemented specific shader effects for the night aesthetic.</li>
+                        <li><strong>Dynamic Geometry:</strong> Custom geometry creation for the environment.</li>
+                    </ul>
+                    <p class="mt-4">Developed using C++ and DirectX11 at Abertay University.</p>
+                `
+            },
+            'advanced-procedural-game': {
+                title: 'Advanced Procedural Game',
+                images: [
+                    'https://i.imgur.com/lJhmgeZ.jpeg'
+                ],
+                description: `
+                    <a href="https://youtu.be/Xjaf3zDb8E8?si=A8elvwVrg7nNusKW" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold text-sm inline-block mb-4">Watch Project Footage on YouTube →</a>
+                    <p>This program is a sophisticated terrain and object interaction simulation game developed using DirectX11. The game showcases an elaborate terrain system capable of generating procedural landscapes with multiple customization options.</p>
+                    <p><strong>Main Features:</strong></p>
+                    <ul class="list-disc list-inside space-y-2 mt-2">
+                        <li><strong>Procedural Terrain Generation:</strong> The terrain is procedurally generated with various methods, including smoothing, faulting, and Perlin noise (Flafla2 2014), allowing for complex and diverse landscapes.</li>
+                        <li><strong>Voronoi Regions:</strong> The terrain further divides into Voronoi regions colored differently, which provides visual cues for gameplay objectives.</li>
+                        <li><strong>Object Interaction:</strong> The game features interactive objects scattered throughout the terrain. These objects change colors upon interaction based on predefined rules.</li>
+                        <li><strong>Drone Player Control:</strong> The player controls a drone, which can fly across the terrain. The drone’s colors change upon interacting with the terrain regions.</li>
+                        <li><strong>L-System Fractals:</strong> Procedural generation of organic-like structures (obstacles) using L-Systems.</li>
+                        <li><strong>Game Objectives:</strong> The goal is to match object colors with the current region color. Upon matching all the colors, the player advances to the next level.</li>
                     </ul>
                 `
             },
@@ -456,6 +517,7 @@
                     'https://i.imgur.com/Ct4be3S.jpeg'
                     ],
                 description: `
+                    <a href="https://youtu.be/wXb_DtnJNmY?si=A_M24lkZ_CPsB8iL" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold text-sm inline-block mb-4">Watch Project Footage on YouTube →</a>
                     <p>This game is an action-packed top-down experience designed for cooperative play. Developed on the Windows API using C++, it emerged as a project during our time in the Computer Game Design and Programming class at Dokuz Eylul University. Our instructor challenged us to create a game without relying on a game engine, prompting my college friends and me to collaboratively craft a distinctive and innovative gaming experience.</p>
                     <p>The game features four ally robots, and at the beginning of the game, users get to choose the model of the robot they will control. Player 1 and Player 2 are each assigned control of one robot at a time, with the computer taking control of the remaining robot. Players have the flexibility to switch between robots at any point during gameplay.</p>
                     <p>The game incorporates two types of fog. The first type, characterized by a gray color, is employed to define the field of view, allowing players to see enemies. This fog is positioned closer to the player than the second type. The second type of fog, distinguished by its black color, is utilized to establish the overall field of view for the entire game environment.</p>
@@ -487,10 +549,16 @@
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             camera.position.z = 5;
-            renderer = new THREE.WebGLRenderer({ canvas: canvas });
-            renderer.setClearColor(0x0a0a1a);
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            
+            try {
+                renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+                renderer.setClearColor(0x0a0a1a);
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            } catch (e) {
+                console.error("WebGL initialization failed:", e);
+                return;
+            }
 
             raycaster = new THREE.Raycaster();
             mouse = new THREE.Vector2();
@@ -542,6 +610,7 @@
 
         function animate() {
             requestAnimationFrame(animate);
+            if (!renderer || !scene || !camera) return;
             symbols.children.forEach(symbol => {
                 if (symbol !== draggedObject) {
                     symbol.rotation.x += 0.0005; 
@@ -558,6 +627,7 @@
         }
 
         function onWindowResize() {
+            if (!camera || !renderer) return;
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
@@ -565,6 +635,7 @@
 
         // --- INTERACTION LOGIC ---
         function onMouseDown(event) {
+            if (!camera || !renderer) return;
             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
             mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
             raycaster.setFromCamera(mouse, camera);
@@ -585,7 +656,7 @@
         }
 
         function onMouseMove(event) {
-            if (draggedObject) {
+            if (draggedObject && camera) {
                  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
                  mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
                  raycaster.setFromCamera(mouse, camera);
@@ -699,12 +770,14 @@
                         
                         modalGallery.innerHTML = '';
                         data.images.forEach(src => {
-                            const img = document.createElement('img');
-                            img.src = src;
-                            img.alt = data.title;
-                            img.className = 'rounded-lg w-full object-cover';
-                            img.onerror = () => img.src = `https://placehold.co/600x400/1a1a2e/e0e0e0?text=${data.title.replace(' ','+')}`;
-                            modalGallery.appendChild(img);
+                            if(src !== '') {
+                                const img = document.createElement('img');
+                                img.src = src;
+                                img.alt = data.title;
+                                img.className = 'rounded-lg w-full object-cover';
+                                img.onerror = () => img.src = `https://placehold.co/600x400/1a1a2e/e0e0e0?text=${data.title.replace(' ','+')}`;
+                                modalGallery.appendChild(img);
+                            }
                         });
 
                         modalDescription.innerHTML = data.description;
