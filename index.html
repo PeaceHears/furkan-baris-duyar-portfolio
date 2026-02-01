@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&family=Fira+Code:wght@400;500&family=Chakra+Petch:wght@600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -22,6 +22,12 @@
         .font-orbitron {
             font-family: 'Orbitron', sans-serif;
         }
+        .font-code {
+            font-family: 'Fira Code', monospace;
+        }
+        .font-technical {
+            font-family: 'Space Grotesk', sans-serif;
+        }
         .hero-canvas {
             position: fixed;
             top: 0;
@@ -30,6 +36,7 @@
             height: 100%;
             z-index: 0;
             cursor: grab;
+            background: transparent; /* Explicitly set for Edge transparency handling */
         }
         .hero-canvas:active {
             cursor: grabbing;
@@ -69,6 +76,28 @@
             margin-left: 0.25rem;
             font-weight: 700;
         }
+
+        /* Syntax Highlighting for Technical Samples */
+        .code-container {
+            background: #050510;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid #1a1a3a;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            overflow-x: auto;
+            color: #b0b0d0;
+            font-family: 'Fira Code', monospace;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+            white-space: pre;
+        }
+        .code-kw { color: #c678dd; font-weight: bold; } /* keyword */
+        .code-fn { color: #61afef; } /* function */
+        .code-cm { color: #5c6370; font-style: italic; } /* comment */
+        .code-tp { color: #e5c07b; } /* type */
+        .code-st { color: #98c379; } /* string */
+        .code-nm { color: #d19a66; } /* number */
+
         /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
@@ -95,6 +124,10 @@
         }
         .modal.hidden .modal-content {
            transform: scale(0.95);
+        }
+        .tab-btn.active {
+            color: #818cf8;
+            border-bottom: 2px solid #818cf8;
         }
     </style>
 </head>
@@ -145,8 +178,8 @@
         <!-- Hero Section -->
         <section class="relative h-screen flex items-center justify-center text-center overflow-hidden">
             <div class="relative z-10 px-4">
-                <h1 class="font-orbitron text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-widest uppercase">
-                    FURKAN BARIS DUYAR
+                <h1 class="font-orbitron text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter fade-in">
+                    FURKAN BARIS <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">DUYAR</span>
                 </h1>
                 <p class="mt-4 text-lg md:text-2xl text-indigo-300 font-light">
                     Game Developer
@@ -158,7 +191,7 @@
                     <a href="https://www.linkedin.com/in/furkan-baris-duyar-69586811a/" target="_blank" class="text-gray-300 hover:text-indigo-400 transition duration-300">
                         <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                     </a>
-                     <a href="https://peacehears.itch.io/" target="_blank" class="text-gray-300 hover:text-indigo-400 transition duration-300">
+                    <a href="https://peacehears.itch.io/" target="_blank" class="text-gray-300 hover:text-indigo-400 transition duration-300">
                         <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28"><path d="M14.008 2.085c.42-.843 1.28-.843 1.7 0l1.68 3.385 3.738.542c.925.134 1.292 1.272.624 1.92L19.08 10.55l.635 3.72c.16  .922-.806 1.62-1.658 1.2L14.008 13.8l-3.34 1.67c-.85.42-1.818-.278-1.657-1.2l.635-3.72-2.67-2.618c-.668-.648-.3-1.786.625-1.92l3.737-.542 1.68-3.385zM28 19.46v-2.53c0-1.325-.93-2.43-2.2-2.66l-4.48-.8c-.27-.05-.5-.19-.67-.39l-2-2.3c-.7-.81-1.98-.81-2.68 0l-2 2.3c-.17.2-.4.34-.67-.39l-4.48.8c-1.27.23-2.2 1.335-2.2 2.66v2.53c0 1.325.93 2.43 2.2 2.66l4.48.8c.27.05-.5.19-.67.39l2 2.3c.7.81 1.98.81 2.68 0l2-2.3c.17-.2.4-.34-.67-.39l4.48-.8c1.27-.23 2.2-1.335 2.2-2.66z"/></svg>
                     </a>
                 </div>
@@ -181,23 +214,6 @@
                 </div>
             </section>
 
-            <!-- Skills Section -->
-            <section id="skills" class="py-20 lg:py-24">
-                <div class="container mx-auto px-6">
-                    <h2 class="font-orbitron text-3xl lg:text-4xl font-bold text-center text-white mb-12 fade-in">Core Technologies</h2>
-                    <div class="max-w-4xl mx-auto flex flex-wrap justify-center items-center gap-x-8 gap-y-4 text-center">
-                        <div class="skill-tag text-xl fade-in">C++</div>
-                        <div class="skill-tag text-xl fade-in">Unreal Engine</div>
-                        <div class="skill-tag text-xl fade-in">Unity</div>
-                        <div class="skill-tag text-xl fade-in">C#</div>
-                        <div class="skill-tag text-xl fade-in">Cocos2d-x</div>
-                        <div class="skill-tag text-xl fade-in">DirectX11</div>
-                        <div class="skill-tag text-xl fade-in">Procedural Content</div>
-                        <div class="skill-tag text-xl fade-in">Gameplay Programming</div>
-                    </div>
-                </div>
-            </section>
-
             <!-- Professional Work Section -->
             <section id="professional" class="py-20 lg:py-32">
                 <div class="container mx-auto px-6">
@@ -211,7 +227,6 @@
                         </p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        <!-- Head Ball 2 Card -->
                         <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/LExZ6fL.jpeg');" data-project="head-ball-2">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
                             <div class="relative p-6 h-full flex flex-col justify-end">
@@ -220,8 +235,6 @@
                                 <p class="text-gray-200 text-sm">A flagship 1v1 football game with over 100 million players worldwide.</p>
                             </div>
                         </div>
-                        
-                        <!-- Basketball Arena Card -->
                         <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/tsDQWKs.jpeg');" data-project="basketball-arena">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
                             <div class="relative p-6 h-full flex flex-col justify-end">
@@ -230,8 +243,6 @@
                                 <p class="text-gray-200 text-sm">A 1v1 online basketball game with over 10 million global players.</p>
                             </div>
                         </div>
-
-                        <!-- Game Dev Consultant Card -->
                         <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80');" data-project="freelance-consultant">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
                             <div class="relative p-6 h-full flex flex-col justify-end">
@@ -240,8 +251,6 @@
                                 <p class="text-gray-200 text-sm">Freelance consultancy focused on technical optimization and cross-platform integrations.</p>
                             </div>
                         </div>
-
-                        <!-- Unnannounced PC Game Card -->
                         <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80');" data-project="unnannounced-PC-Game">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
                             <div class="relative p-6 h-full flex flex-col justify-end">
@@ -264,13 +273,39 @@
                         </p>
                     </div>
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
                         <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/7TAbLyl.jpeg');" data-project="ai-pcg">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
                             <div class="relative p-6 h-full flex flex-col justify-end">
                                 <h3 class="font-orbitron text-xl font-bold text-white">AI-Driven PCG Framework</h3>
-                                <p class="text-sm text-indigo-400 mb-2">Unreal Engine, C++, Blueprint</p>
-                                <p class="text-gray-200 text-sm">My Master's project developing an adaptive PCG framework in Unreal Engine. Click to see details.</p>
+                                <p class="text-sm text-indigo-400 mb-2">Unreal Engine 5, C++, PCG</p>
+                                <p class="text-gray-200 text-sm">Adaptive environment generation in TPS games. Click to see details.</p>
+                            </div>
+                        </div>
+                        
+                         <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/vvRWaQE.jpeg');" data-project="night-street-aurora">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                            <div class="relative p-6 h-full flex flex-col justify-end">
+                                <h3 class="font-orbitron text-xl font-bold text-white">Night Street View with Aurora</h3>
+                                <p class="text-sm text-indigo-400 mb-2">DirectX11, C++</p>
+                                <p class="text-gray-200 text-sm">An advanced graphics demo featuring Render-to-Texture, post-processing, and dynamic lighting. Click to see details.</p>
+                            </div>
+                        </div>
+
+                        <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/lJhmgeZ.jpeg');" data-project="advanced-procedural-game">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                            <div class="relative p-6 h-full flex flex-col justify-end">
+                                <h3 class="font-orbitron text-xl font-bold text-white">Advanced Procedural Game</h3>
+                                <p class="text-sm text-indigo-400 mb-2">DirectX11, C++</p>
+                                <p class="text-gray-200 text-sm">A procedural terrain engine using Perlin noise, Voronoi diagrams, and L-System fractals. Click to see details.</p>
+                            </div>
+                        </div>
+                        
+                         <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/WYVDjhX.jpeg');" data-project="defiers-of-the-four">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                            <div class="relative p-6 h-full flex flex-col justify-end">
+                                <h3 class="font-orbitron text-xl font-bold text-white">Defiers of the Four</h3>
+                                <p class="text-sm text-indigo-400 mb-2">Windows API, C++</p>
+                                <p class="text-gray-200 text-sm">A co-op shooter built from scratch in C++ and the Windows API, without a game engine. Click to see details.</p>
                             </div>
                         </div>
                         
@@ -298,35 +333,6 @@
                                 <h3 class="font-orbitron text-xl font-bold text-white">Bubblegum Businessman</h3>
                                  <p class="text-sm text-indigo-400 mb-2">Unity, C#</p>
                                  <p class="text-gray-200 text-sm">A 2D pixel art game developed for Global Game Jam 2025 where I was the sole programmer. Click to see details.</p>
-                            </div>
-                        </div>
-                        
-                         <!-- NEW CARD 1: Night Street View with Aurora -->
-                         <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/vvRWaQE.jpeg');" data-project="night-street-aurora">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
-                            <div class="relative p-6 h-full flex flex-col justify-end">
-                                <h3 class="font-orbitron text-xl font-bold text-white">Night Street View with Aurora</h3>
-                                <p class="text-sm text-indigo-400 mb-2">DirectX11, C++</p>
-                                <p class="text-gray-200 text-sm">An advanced graphics demo featuring Render-to-Texture, post-processing, and dynamic lighting. Click to see details.</p>
-                            </div>
-                        </div>
-
-                        <!-- NEW CARD 2: Advanced Procedural Game -->
-                        <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/lJhmgeZ.jpeg');" data-project="advanced-procedural-game">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
-                            <div class="relative p-6 h-full flex flex-col justify-end">
-                                <h3 class="font-orbitron text-xl font-bold text-white">Advanced Procedural Game</h3>
-                                <p class="text-sm text-indigo-400 mb-2">DirectX11, C++</p>
-                                <p class="text-gray-200 text-sm">A procedural terrain engine using Perlin noise, Voronoi diagrams, and L-System fractals. Click to see details.</p>
-                            </div>
-                        </div>
-                        
-                         <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/WYVDjhX.jpeg');" data-project="defiers-of-the-four">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
-                            <div class="relative p-6 h-full flex flex-col justify-end">
-                                <h3 class="font-orbitron text-xl font-bold text-white">Defiers of the Four</h3>
-                                <p class="text-sm text-indigo-400 mb-2">Windows API, C++</p>
-                                <p class="text-gray-200 text-sm">A co-op shooter built from scratch in C++ and the Windows API, without a game engine. Click to see details.</p>
                             </div>
                         </div>
 
@@ -363,97 +369,549 @@
             </footer>
         </main>
     </div>
+
     <!-- Modal Structure -->
-    <div id="project-modal" class="modal fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black bg-opacity-75 hidden">
-        <div id="modal-content" class="modal-content glass-effect rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto p-8 relative">
+    <div id="project-modal" class="modal fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black bg-opacity-90 hidden overflow-y-auto">
+        <div id="modal-content" class="modal-content glass-effect rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto p-8 relative">
             <button id="modal-close-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
-            <h2 id="modal-title" class="font-orbitron text-3xl font-bold text-white mb-4"></h2>
-            <div id="modal-gallery" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"></div>
-            <div id="modal-description" class="text-gray-300 space-y-4"></div>
+            <h2 id="modal-title" class="font-orbitron text-3xl font-bold text-white mb-6"></h2>
+            
+            <!-- Modal Tabs -->
+            <div id="modal-tabs" class="flex space-x-6 border-b border-white/10 mb-6 hidden">
+                <button class="tab-btn active font-orbitron text-sm uppercase tracking-widest pb-2 text-white transition" data-tab="overview">Overview</button>
+                <button class="tab-btn font-orbitron text-sm uppercase tracking-widest pb-2 text-gray-400 hover:text-white transition" data-tab="technical">Technical Deep Dive</button>
+            </div>
+
+            <!-- Page 1: Overview -->
+            <div id="modal-overview-content" class="modal-page">
+                <div id="modal-gallery" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"></div>
+                <div id="modal-description" class="text-gray-300 space-y-4"></div>
+            </div>
+
+            <!-- Page 2: Technical Deep Dive -->
+            <div id="modal-technical-content" class="modal-page hidden space-y-12 pb-10">
+                <!-- Technical samples injected here -->
+            </div>
         </div>
     </div>
 
 
     <script>
+        // --- Technical Samples for AI-Driven PCG Framework ---
+        const aiPcgSamples = [
+            {
+                title: "Contextual State Tag Detection",
+                description: "Leveraging the Unreal Engine 5 Gameplay Ability System (GAS) to monitor dynamic combat states. This implementation uses a non-polling, tag-based listener pattern that triggers environmental adaptation only when the player enters specific combat contexts (e.g., 'Combat.Aggressive'), ensuring efficient framework execution.",
+                code: `<div class="code-container font-code">
+<span class="code-cm">// Senior implementation of GAS Tag monitoring for environmental triggers</span>
+<span class="code-kw">void</span> <span class="code-fn">UPCGStateComponent::OnCombatStateChanged</span>(<span class="code-kw">const</span> <span class="code-tp">FGameplayTag</span> Tag, <span class="code-tp">int32</span> NewCount)
+{ 
+  <span class="code-kw">const</span> <span class="code-tp">bool</span> bIsCombatActive = NewCount &gt; <span class="code-nm">0</span>;
+  
+  <span class="code-cm">// Execute environmental shift only on meaningful state transitions</span>
+  <span class="code-kw">if</span> (bIsCombatActive != m_bLastCombatState)
+  { 
+    m_bLastCombatState = bIsCombatActive;
+    <span class="code-fn">TriggerContextualGeneration</span>(Tag, bIsCombatActive);
+  }
+}</div>`
+            },
+            {
+                title: "Weighted Heuristic Module Selection",
+                description: "An advanced algorithmic approach to module selection. Instead of simple random placement, this logic evaluates environmental modules against current gameplay heuristics (e.g., player health, enemy density, ammo count) using a weighted probability map to ensure the generated level design supports the current combat pacing.",
+                code: `<div class="code-container font-code">
+<span class="code-cm">// Sophisticated module selection using weighted gameplay heuristics</span>
+<span class="code-tp">UPCGModule*</span> <span class="code-fn">UPCGGenerator::SelectOptimalModule</span>(<span class="code-kw">const</span> <span class="code-tp">TArray</span>&lt;<span class="code-tp">UPCGModule*</span>&gt;&amp; AvailableModules)
+{ 
+  <span class="code-tp">float</span> TotalWeight = <span class="code-nm">0.0f</span>;
+  <span class="code-tp">TMap</span>&lt;<span class="code-tp">UPCGModule*</span>, <span class="code-tp">float</span>&gt; WeightedMap;
+
+  <span class="code-kw">for</span> (<span class="code-tp">UPCGModule*</span> Module : AvailableModules) 
+  {
+    <span class="code-cm">// Calculate score based on Context-Sensitive factors</span>
+    <span class="code-kw">const</span> <span class="code-tp">float</span> Weight = <span class="code-fn">CalculateHeuristicScore</span>(Module, m_CurrentGameplayMetrics);
+    WeightedMap.<span class="code-fn">Add</span>(Module, Weight);
+    TotalWeight += Weight;
+  }
+
+  <span class="code-cm">// Normalized random selection within the weighted distribution</span>
+  <span class="code-kw">return</span> <span class="code-fn">GetWeightedRandomModule</span>(WeightedMap, TotalWeight);
+}</div>`
+            },
+            {
+                title: "Asynchronous Generation Orchestrator",
+                description: "Managing procedural generation tasks without blocking the game thread. This orchestrator handles the asynchronous execution of PCG Graphs, ensuring that complex environmental modifications are calculated on background threads to maintain a stable 60+ FPS in high-intensity TPS combat.",
+                code: `<div class="code-container font-code">
+<span class="code-cm">// Orchestrates non-blocking asynchronous PCG graph execution</span>
+<span class="code-kw">void</span> <span class="code-fn">UPCGOrchestrator::RequestAsyncGeneration</span>(<span class="code-tp">FPCGContext</span>&amp; Context) 
+{
+  <span class="code-cm">// Queue generation on background thread to prevent Game Thread hitches</span>
+  <span class="code-tp">AsyncTask</span>(ENamedThreads::AnyBackgroundThreadNormalTask, [Context, <span class="code-kw">this</span>]()
+  {
+    <span class="code-tp">FPCGData</span> Result = <span class="code-fn">ExecutePCGGraph</span>(Context);
+    
+    <span class="code-cm">// Dispatch back to Game Thread for safe actor spawning/updates</span>
+    <span class="code-tp">AsyncTask</span>(ENamedThreads::GameThread, [Result, <span class="code-kw">this</span>]()
+    {
+      <span class="code-fn">FinalizeEnvironmentalShift</span>(Result);
+    });
+  });
+}</div>`
+            }
+        ];
+
+        // --- Technical Samples for All or Nothing ---
+        const allOrNothingSamples = [
+            {
+                title: "Layer-Aware Navigation Baking",
+                description: "Addressing production challenges with overlapping procedural geometry. I architected a system that programmatically identifies walkable area by cross-evaluating multiple tiered tilemaps (Visual vs. Collision layers), enabling precise A* pathfinding and zero-jitter physics for the player and AI agents.",
+                code: `<div class="code-container font-code">
+<span class="code-cm">// Programmatically identifies walkable area across tiered tilemaps</span>
+<span class="code-kw">public void</span> <span class="code-fn">BakeNavigationData</span>()
+{ 
+  <span class="code-cm">// 1. Identify bounds based on the procedural room dimensions</span> 
+  <span class="code-kw">var</span> roomBounds = m_roomGenerator.<span class="code-fn">GetCurrentRoomBounds</span>();
+  
+  <span class="code-kw">foreach</span> (<span class="code-kw">var</span> pos <span class="code-kw">in</span> roomBounds.allPositionsWithin)
+  { 
+    <span class="code-cm">// 2. Logic to verify tile validity: Must have a floor but no obstacles</span> 
+    <span class="code-kw">bool</span> hasFloor = m_floorTilemap.<span class="code-fn">HasTile</span>(pos);
+    <span class="code-kw">bool</span> hasObstacle = m_collisionTilemap.<span class="code-fn">HasTile</span>(pos);
+    
+    <span class="code-cm">// 3. Update the logical navigation grid used by Pathfinding AI</span> 
+    m_navigationGrid.<span class="code-fn">SetNodeState</span>(pos, hasFloor &amp;&amp; !hasObstacle);
+  }
+}</div>`
+            },
+            {
+                title: "Data-Driven Card Ability Architecture",
+                description: "A highly extensible combat framework designed for rapid designer iteration. Utilizing Unity ScriptableObjects, I decoupled card metadata from execution logic. This enabled the design team to prototype over 50 unique card effects (damage types, status buffs) with zero additional programming overhead.",
+                code: `<div class="code-container font-code">
+<span class="code-cm">// Decoupled card effect execution pattern via ScriptableObjects</span>
+[CreateAssetMenu(menuName = <span class="code-st">"Roguelike/Abilities/CardEffect"</span>)]
+<span class="code-kw">public abstract class</span> <span class="code-tp">CardEffect</span> : ScriptableObject 
+{
+  <span class="code-cm">// Implementation of the Strategy pattern for combat abilities</span>
+  <span class="code-kw">public abstract void</span> <span class="code-fn">ApplyEffect</span>(<span class="code-tp">ICombatant</span> source, <span class="code-tp">ICombatant</span> target);
+}
+
+<span class="code-kw">public class</span> <span class="code-tp">DamageEffect</span> : <span class="code-tp">CardEffect</span> 
+{
+  <span class="code-kw">public override void</span> <span class="code-fn">ApplyEffect</span>(<span class="code-tp">ICombatant</span> source, <span class="code-tp">ICombatant</span> target) 
+  {
+    <span class="code-cm">// Execution logic factoring in target defense and source multipliers</span>
+    target.<span class="code-fn">TakeDamage</span>(source.AttackPower * m_multiplier);
+  }
+}</div>`
+            },
+            {
+                title: "State-Driven BlendedCharacter Engine",
+                description: "A high-fidelity locomotion system that bridges complex 2D physics with responsive animations. I utilized Unity Blend Trees coupled with the DoTween library to manage state-driven transitions (Locomotion to Dashing), ensuring frame-perfect feedback in a fast-paced action roguelike setting.",
+                code: `<div class="code-container font-code">
+<span class="code-cm">// Senior implementation of blended animation and physics states</span>
+<span class="code-kw">private void</span> <span class="code-fn">UpdateLocomotionState</span>(<span class="code-tp">Vector2</span> inputVector) 
+{
+  <span class="code-cm">// 1. Drive Blend Tree parameters via normalized physics velocity</span> 
+  <span class="code-tp">float</span> currentSpeed = inputVector.sqrMagnitude;
+  m_animator.<span class="code-fn">SetFloat</span>(<span class="code-st">"Speed"</span>, currentSpeed);
+  
+  <span class="code-cm">// 2. Execution of atomic combat states (Dash, Special Attack)</span> 
+  <span class="code-kw">if</span> (m_isDashing) 
+  {
+    m_animator.<span class="code-fn">SetTrigger</span>(<span class="code-st">"Dash"</span>);
+    <span class="code-cm">// High-precision movement curve handling via DoTween</span>
+    m_rigidbody.<span class="code-fn">DOMove</span>(m_dashTarget, DASH_DURATION).<span class="code-fn">SetEase</span>(Ease.OutExpo);
+  }
+}</div>`
+            }
+        ];
+
+        // --- Technical Samples for Bubblegum Businessman ---
+        const bubblegumSamples = [
+            {
+                title: "Post-Pipeline Camera Extension",
+                description: "Custom extension of the Cinemachine pipeline to enforce strict perspective constraints. This implementation uses the PostPipelineStageCallback to override raw camera positions, locking the X-axis for a focused 'skyscraper' ascent while allowing full vertical freedom.",
+                code: `<div class="code-container font-code">
+<span class="code-cm">// Senior Cinemachine extension to enforce fixed-axis perspective</span>
+<span class="code-kw">protected override void</span> <span class="code-fn">PostPipelineStageCallback</span>(
+    <span class="code-tp">CinemachineVirtualCameraBase</span> vcam,
+    <span class="code-tp">CinemachineCore.Stage</span> stage, <span class="code-kw">ref</span> <span class="code-tp">CameraState</span> state, <span class="code-tp">float</span> deltaTime)
+{
+    <span class="code-kw">if</span> (stage == CinemachineCore.Stage.Body)
+    {
+        <span class="code-tp">Vector3</span> pos = state.RawPosition;
+        <span class="code-cm">// Enforce strict horizontal lock for specialized level design</span>
+        pos.x = m_XPosition;
+        state.RawPosition = pos;
+    }
+}</div>`
+            },
+            {
+                title: "Physics-Coupled Growth Mechanics",
+                description: "A reactive locomotion system where player scale directly influences vertical physics. This logic uses frame-independent lerping for visual growth while simultaneously updating velocity scalars, creating a 'Senior-level' tactile feel for the bubble-gum inflation mechanic.",
+                code: `<div class="code-container font-code">
+<span class="code-cm">// Synchronizes gum inflation scale with player vertical speed</span>
+<span class="code-kw">private void</span> <span class="code-fn">HandleInflation</span>()
+{ 
+    <span class="code-kw">if</span> (Input.<span class="code-fn">GetKeyDown</span>(KeyCode.W))
+    {
+        <span class="code-cm">// 1. Increment target scale within safety bounds</span>
+        m_targetScale += <span class="code-tp">Vector3</span>.one * scaleFactor;
+        
+        <span class="code-cm">// 2. Directly scale vertical physics speed based on volume</span>
+        m_movement.<span class="code-fn">verticalSpeed</span> += <span class="code-nm">1</span>;
+    }
+}
+
+<span class="code-kw">private void</span> <span class="code-fn">FixedUpdate</span>()
+{
+    <span class="code-cm">// Frame-independent smooth scale transition</span>
+    transform.localScale = <span class="code-tp">Vector3</span>.<span class="code-fn">Lerp</span>(transform.localScale, m_targetScale, growthSpeed * Time.deltaTime);
+}</div>`
+            },
+            {
+                title: "Follow-Transform Parallax Orchestration",
+                description: "An efficient parallax layer controller designed for the high vertical movement of the project. It programmatically scans child elements and updates relative Y-offsets based on delta-movement to the primary player transform, avoiding expensive frame-by-frame absolute coordinate calculations.",
+                code: `<div class="code-container font-code">
+<span class="code-cm">// Orchestrates relative vertical parallax shifts for environmental depth</span>
+<span class="code-kw">private void</span> <span class="code-fn">FollowTransformY</span>()
+{
+    <span class="code-cm">// Calculate vertical distance delta since last frame</span>
+    <span class="code-tp">float</span> distance = m_lastY - transformToFollow.position.y;
+    
+    <span class="code-kw">if</span> (Mathf.<span class="code-fn">Abs</span>(distance) &lt; <span class="code-nm">0.001f</span>) <span class="code-kw">return</span>;
+
+    <span class="code-cm">// Batch update all registered parallax layers</span>
+    <span class="code-kw">foreach</span> (<span class="code-kw">var</span> layer <span class="code-kw">in</span> m_parallaxLayers)
+    {
+        layer.<span class="code-fn">MoveY</span>(distance);
+    }
+    
+    m_lastY = transformToFollow.position.y;
+}</div>`
+            }
+        ];
+
+        // --- Technical Samples for Advanced Procedural Game ---
+        const proceduralSamples = [
+            {
+                title: "Bilinear Terrain Sampling",
+                description: "Reconstructing surface elevation from a discrete heightmap grid. This algorithm maps world-space coordinates to normalized unit-cell space and performs a weighted interpolation of the four nearest vertices. This is essential for jitter-free procedural physics and high-fidelity drone navigation.",
+                code: `<div class="code-container font-code">
+<span class="code-cm">// Reconstructs exact height at world coordinate (x, z) using neighbors</span>
+<span class="code-tp">float</span> <span class="code-fn">Terrain::GetHeightAt</span>(<span class="code-tp">float</span> x, <span class="code-tp">float</span> z)
+{ 
+  <span class="code-cm">// 1. Map world coordinates to grid indices and clamp</span> 
+  x = <span class="code-fn">Utils::Clamp</span>(x, <span class="code-nm">0.0f</span>, <span class="code-tp">static_cast</span>&lt;<span class="code-tp">float</span>&gt;(m_width - <span class="code-nm">1</span>));
+  z = <span class="code-fn">Utils::Clamp</span>(z, <span class="code-nm">0.0f</span>, <span class="code-tp">static_cast</span>&lt;<span class="code-tp">float</span>&gt;(m_height - <span class="code-nm">1</span>));
+  
+  <span class="code-kw">const</span> <span class="code-tp">int</span> x0 = <span class="code-tp">static_cast</span>&lt;<span class="code-tp">int</span>&gt;(x);
+  <span class="code-kw">const</span> <span class="code-tp">int</span> z0 = <span class="code-tp">static_cast</span>&lt;<span class="code-tp">int</span>&gt;(z); 
+  
+  <span class="code-cm">// 2. Calculate fractional offset for interpolation weights</span> 
+  <span class="code-kw">const</span> <span class="code-tp">float</span> tx = x - <span class="code-tp">static_cast</span>&lt;<span class="code-tp">float</span>&gt;(x0);
+  <span class="code-kw">const</span> <span class="code-tp">float</span> tz = z - <span class="code-tp">static_cast</span>&lt;<span class="code-tp">float</span>&gt;(z0); 
+  
+  <span class="code-cm">// 3. Sample the quad vertex heights</span> 
+  <span class="code-kw">const</span> <span class="code-tp">float</span> h00 = m_heightMap[z0 * m_width + x0].y;
+  <span class="code-kw">const</span> <span class="code-tp">float</span> h10 = m_heightMap[z0 * m_width + (x0 + <span class="code-nm">1</span>)].y;
+  <span class="code-kw">const</span> <span class="code-tp">float</span> h01 = m_heightMap[(z0 + <span class="code-nm">1</span>) * m_width + x0].y;
+  <span class="code-kw">const</span> <span class="code-tp">float</span> h11 = m_heightMap[(z0 + <span class="code-nm">1</span>) * m_width + (x0 + <span class="code-nm">1</span>)].y; 
+  
+  <span class="code-cm">// 4. Apply standard bilinear formula</span> 
+  <span class="code-kw">return</span> (<span class="code-nm">1.0f</span> - tx) * (<span class="code-nm">1.0f</span> - tz) * h00 + tx * (<span class="code-nm">1.0f</span> - tz) * h10 + (<span class="code-nm">1.0f</span> - tx) * tz * h01 + tx * tz * h11;
+}</div>`
+            },
+            {
+                title: "Optimized L-System Production Expansion",
+                description: "A high-performance implementation of recursive string rewriting. By utilizing std::unordered_map for O(1) production lookups and pre-calculating string capacity via heuristics, this engine avoids expensive heap reallocations during fractal generation iterations.",
+                code: `<div class="code-container font-code">
+<span class="code-cm">// Efficiently expands procedural string based on rule mapping</span>
+<span class="code-kw">void</span> <span class="code-fn">LSystem::ExpandRules</span>(<span class="code-tp">uint32_t</span> iterations) 
+{
+  <span class="code-kw">for</span> (<span class="code-tp">uint32_t</span> i = <span class="code-nm">0</span>; i &lt; iterations; ++i) 
+  {
+    <span class="code-tp">std::string</span> buffer;
+    <span class="code-cm">// Heuristic: Reserve capacity to minimize reallocations</span>
+    buffer.<span class="code-fn">reserve</span>(currentString.<span class="code-fn">length</span>() * <span class="code-nm">2</span>); 
+
+    <span class="code-kw">for</span> (<span class="code-kw">const</span> <span class="code-tp">char</span> symbol : currentString) 
+    {
+      <span class="code-cm">// O(1) Lookup in production dictionary</span>
+      <span class="code-kw">auto</span> it = m_rules.<span class="code-fn">find</span>(symbol);
+      <span class="code-kw">if</span> (it != m_rules.<span class="code-fn">end</span>()) 
+      {
+        buffer.<span class="code-fn">append</span>(it-&gt;second);
+      } 
+      <span class="code-kw">else</span> 
+      {
+        buffer.<span class="code-fn">push_back</span>(symbol);
+      }
+    }
+    currentString = <span class="code-tp">std::move</span>(buffer); <span class="code-cm">// Zero-copy optimization</span>
+  }
+}</div>`
+            },
+            {
+                title: "Procedural Mesh Turtle Interpretation",
+                description: "Transforming abstract symbols into 3D world geometry. This function implements a state-stack (LIFO) pattern to handle recursive branching. It maintains relative transformation states, allowing for the procedural construction of complex organic meshes from flat instruction sets.",
+                code: `<div class="code-container font-code">
+<span class="code-cm">// Interpreting instructions into geometric branch segments</span>
+<span class="code-kw">void</span> <span class="code-fn">FractalObstacle::BuildGeometry</span>(<span class="code-tp">std::string</span>& instructions) 
+{
+  <span class="code-tp">std::stack</span>&lt;<span class="code-tp">TurtleState</span>&gt; stack;
+  
+  <span class="code-kw">for</span> (<span class="code-tp">char</span> command : instructions) 
+  {
+    <span class="code-kw">switch</span> (command) 
+    {
+      <span class="code-kw">case</span> <span class="code-st">'F'</span>: 
+        <span class="code-fn">AddSegment</span>(m_state.position, m_state.orientation); 
+        <span class="code-kw">break</span>;
+      <span class="code-kw">case</span> <span class="code-st">'['</span>: 
+        stack.<span class="code-fn">push</span>(m_state); <span class="code-kw">break</span>; <span class="code-cm">// Save transform node</span>
+      <span class="code-kw">case</span> <span class="code-st">']'</span>: 
+        m_state = stack.<span class="code-fn">top</span>(); 
+        stack.<span class="code-fn">pop</span>(); <span class="code-cm">// Revert to parent node</span>
+      <span class="code-kw">case</span> <span class="code-st">'+'</span>: 
+        m_state.orientation *= <span class="code-tp">Quaternion</span>::<span class="code-fn">FromAxisAngle</span>(up, angle); 
+        <span class="code-kw">break</span>;
+    }
+  }
+}</div>`
+            }
+        ];
+
+        // --- Technical Samples for Night Street View Aurora ---
+        const auroraSamples = [
+            {
+                title: "Multi-Pass Pipeline Orchestration",
+                description: "Orchestrating the graphics pipeline to handle full-screen effects. This high-level logic manages switching render targets from the primary scene buffer to specific post-processing textures, ensuring correct resource state transitions between passes.",
+                code: `<div class="code-container font-code">
+<span class="code-cm">// Orchestrates the multi-pass rendering flow for post-processing</span>
+<span class="code-kw">void</span> <span class="code-fn">App1::RenderToTexture</span>()
+{
+  <span class="code-cm">// 1. Redirect output to a Render Texture for the scene pass</span>
+  m_SceneTexture-&gt;<span class="code-fn">setRenderTarget</span>(m_Direct3D-&gt;<span class="code-fn">getDeviceContext</span>());
+  m_SceneTexture-&gt;<span class="code-fn">clearRenderTarget</span>(m_Direct3D-&gt;<span class="code-fn">getDeviceContext</span>(), <span class="code-nm">0.0f</span>, <span class="code-nm">0.0f</span>, <span class="code-nm">0.0f</span>, <span class="code-nm">1.0f</span>);
+
+  <span class="code-cm">// 2. Render core geometry (Land, Bridge, Houses) to the buffer</span>
+  m_Terrain-&gt;<span class="code-fn">sendData</span>(m_Direct3D-&gt;<span class="code-fn">getDeviceContext</span>());
+  m_TerrainShader-&gt;<span class="code-fn">setShaderParameters</span>(m_Direct3D-&gt;<span class="code-fn">getDeviceContext</span>(), ...);
+  m_TerrainShader-&gt;<span class="code-fn">render</span>(m_Direct3D-&gt;<span class="code-fn">getDeviceContext</span>(), m_Terrain-&gt;<span class="code-fn">getIndexCount</span>());
+
+  <span class="code-cm">// 3. Reset back to the display buffer for final UI/Presentation</span>
+  m_Direct3D-&gt;<span class="code-fn">setBackBufferRenderTarget</span>();
+  m_Direct3D-&gt;<span class="code-fn">resetViewport</span>();
+}</div>`
+            },
+            {
+                title: "Efficient GPU Constant Buffer Mapping",
+                description: "Managing high-frequency data transfer to the GPU. This implementation uses the Map/Unmap pattern with D3D11_MAP_WRITE_DISCARD, effectively bypassing CPU-GPU synchronization overhead and preventing pipeline stalls during dynamic time-based shader updates.",
+                code: `<div class="code-container font-code">
+<span class="code-cm">// Synchronizes CPU simulation data with GPU Aurora shader buffers</span>
+<span class="code-kw">void</span> <span class="code-fn">AuroraShader::UpdateGlobalConstants</span>(ID3D11DeviceContext* context, <span class="code-tp">float</span> time)
+{
+  D3D11_MAPPED_SUBRESOURCE mappedResource;
+  
+  <span class="code-cm">// Map with DISCARD to allow the GPU to continue using the old buffer</span>
+  <span class="code-tp">HRESULT</span> result = context-&gt;<span class="code-fn">Map</span>(m_constantBuffer, <span class="code-nm">0</span>, D3D11_MAP_WRITE_DISCARD, <span class="code-nm">0</span>, &mappedResource);
+  <span class="code-kw">if</span> (<span class="code-fn">SUCCEEDED</span>(result))
+  {
+    <span class="code-kw">auto</span>* dataPtr = <span class="code-tp">static_cast</span>&lt;<span class="code-tp">BufferType</span>*&gt;(mappedResource.pData);
+    dataPtr-&gt;time = time;
+    dataPtr-&gt;intensity = m_intensity;
+    
+    context-&gt;<span class="code-fn">Unmap</span>(m_constantBuffer, <span class="code-nm">0</span>);
+    context-&gt;<span class="code-fn">PSSetConstantBuffers</span>(<span class="code-nm">0</span>, <span class="code-nm">1</span>, &m_constantBuffer);
+  }
+}</div>`
+            },
+            {
+                title: "Hardware Tessellation Factor Management",
+                description: "Programmatically driving fixed-function tessellation hardware. This logic calculates and uploads edge and interior factors to the Hull Shader, enabling dynamic Level-Of-Detail (LOD) for complex environmental geometry like the bridge and terrain surfaces.",
+                code: `<div class="code-container font-code">
+<span class="code-cm">// Sets hardware tessellation density via Hull Shader constants</span>
+<span class="code-kw">void</span> <span class="code-fn">TessellationShader::SetTessellationParams</span>(ID3D11DeviceContext* deviceContext, <span class="code-tp">float</span> tessFactor)
+{
+  D3D11_MAPPED_SUBRESOURCE mappedResource;
+  
+  <span class="code-cm">// Update Hull Shader constant buffer to drive hardware tessellation density</span>
+  <span class="code-kw">if</span> (<span class="code-fn">SUCCEEDED</span>(deviceContext-&gt;<span class="code-fn">Map</span>(m_tessBuffer, <span class="code-nm">0</span>, D3D11_MAP_WRITE_DISCARD, <span class="code-nm">0</span>, &mappedResource)))
+  {
+    <span class="code-kw">auto</span>* dataPtr = <span class="code-tp">static_cast</span>&lt;<span class="code-tp">TessellationBufferType</span>*&gt;(mappedResource.pData);
+    dataPtr-&gt;tessellationFactor = <span class="code-fn">Utils::Clamp</span>(tessFactor, <span class="code-nm">1.0f</span>, <span class="code-nm">64.0f</span>);
+    
+    deviceContext-&gt;<span class="code-fn">Unmap</span>(m_tessBuffer, <span class="code-nm">0</span>);
+    deviceContext-&gt;<span class="code-fn">HSSetConstantBuffers</span>(<span class="code-nm">0</span>, <span class="code-nm">1</span>, &m_tessBuffer);
+  }
+}</div>`
+            }
+        ];
+
+        // --- Technical Samples for Defiers of the Four ---
+        const defiersSamples = [
+            {
+                title: "Network Entity State Interpolation",
+                description: "Handling non-authoritative entity smoothing to eliminate visual 'snapping' and jitter caused by network latency. This algorithm calculates a normalized alpha based on server update frequency and perform linear interpolation (LERP) between sequential snapshots.",
+                code: `<div class="code-container font-code">
+<span class="code-cm">// Smoothly interpolates entity position between server snapshots</span>
+<span class="code-kw">void</span> <span class="code-fn">ClientRobotInterpolation::Update</span>(<span class="code-tp">float</span> alpha)
+{ 
+  <span class="code-cm">// 1. Retrieve the previous and most recent server states</span> 
+  <span class="code-kw">const</span> <span class="code-tp">Vector2</span> start = m_snapshots[<span class="code-nm">0</span>].position;
+  <span class="code-kw">const</span> <span class="code-tp">Vector2</span> end   = m_snapshots[<span class="code-nm">1</span>].position;
+
+  <span class="code-cm">// 2. Linear interpolation for jitter-free visual position</span> 
+  m_renderPosition.x = start.x + alpha * (end.x - start.x);
+  m_renderPosition.y = start.y + alpha * (end.y - start.y);
+
+  <span class="code-cm">// 3. Maintain consistent orientation with smoothed position</span> 
+  m_renderRotation = <span class="code-fn">LerpRotation</span>(m_snapshots[<span class="code-nm">0</span>].rot, m_snapshots[<span class="code-nm">1</span>].rot, alpha);
+}</div>`
+            },
+            {
+                title: "Cooperative Assist & State Management",
+                description: "Managing complex interlocking state transitions in a co-op context. This logic governs the revival mechanic where allies assist 'fallen' robots, utilizing atomic state checks and timed recovery constants.",
+                code: `<div class="code-container font-code">
+<span class="code-cm">// Logic for ally revival and Fallen robot state recovery</span>
+<span class="code-kw">void</span> <span class="code-fn">Robot::ProcessAllyInteraction</span>(<span class="code-tp">Robot</span>* ally)
+{ 
+  <span class="code-cm">// Check if the current entity is in a 'fallen' status but not dead</span> 
+  <span class="code-kw">if</span> (m_status == <span class="code-tp">Status</span>::FALLEN &amp;&amp; !m_isDead)
+  { 
+    <span class="code-cm">// Ally robot must be within interaction radius</span> 
+    <span class="code-kw">if</span> (<span class="code-fn">GetDistance</span>(ally-&gt;<span class="code-fn">GetPos</span>()) &lt; INTERACTION_RADIUS)
+    { 
+      m_reviveProgress += m_timer.<span class="code-fn">GetDeltaTime</span>();
+      <span class="code-kw">if</span> (m_reviveProgress &gt;= REVIVE_TIME_THRESHOLD)
+      { 
+        <span class="code-fn">Recover</span>(HEALTH_RESTORE_PERCENT);
+        m_status = <span class="code-tp">Status</span>::ACTIVE;
+      }
+    }
+  }
+}</div>`
+            },
+            {
+                title: "Autonomous Steering AI & Firing Logic",
+                description: "Optimized behavioral logic for 'Demon' entities. This implementation combines simple steering behaviors (arrival/pursuit) with predictive firing arcs, calculating normalized direction vectors to drive the custom WinAPI sprite engine.",
+                code: `<div class="code-container font-code">
+<span class="code-cm">// Drives the behavior loop for Demon entities</span>
+<span class="code-kw">void</span> <span class="code-fn">Demon::ProcessAI</span>(<span class="code-tp">const</span> <span class="code-tp">Vector2</span>&amp; targetPos)
+{ 
+  <span class="code-cm">// 1. Calculate steering vector toward target</span> 
+  <span class="code-tp">Vector2</span> direction = targetPos - m_position;
+  <span class="code-tp">float</span> distance = direction.<span class="code-fn">Normalize</span>();
+
+  <span class="code-cm">// 2. Move if target is outside comfort radius</span> 
+  <span class="code-kw">if</span> (distance &gt; ATTACK_RANGE_THRESHOLD)
+  { 
+    m_position += direction * m_speed * m_timer.<span class="code-fn">GetDeltaTime</span>();
+  }
+
+  <span class="code-cm">// 3. Controlled burst fire logic</span> 
+  m_fireCooldown -= m_timer.<span class="code-fn">GetDeltaTime</span>();
+  <span class="code-kw">if</span> (m_fireCooldown &lt;= <span class="code-nm">0.0f</span> &amp;&amp; <span class="code-fn">CanSeeTarget</span>(targetPos))
+  { 
+    <span class="code-fn">SpawnProjectile</span>(m_position, direction);
+    m_fireCooldown = FIRE_RATE_INTERVAL;
+  }
+}</div>`
+            }
+        ];
+
         // --- DATA FOR PROJECT MODALS ---
         const projectData = {
             'head-ball-2': {
                 title: 'Head Ball 2',
-                images: [
-                    'https://i.imgur.com/HJXRHf6.jpeg',
-                    'https://i.imgur.com/LExZ6fL.jpeg'
-                ],
+                images: ['https://i.imgur.com/HJXRHf6.jpeg', 'https://i.imgur.com/LExZ6fL.jpeg'],
                 description: `
                     <div class="flex space-x-4 mb-6">
                         <a href="https://apps.apple.com/gb/app/head-ball-2-football-game/id1193933380" target="_blank" class="flex-1 text-center bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg transition">App Store</a>
                         <a href="https://play.google.com/store/apps/details?id=com.masomo.headball2" target="_blank" class="flex-1 text-center bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition">Google Play</a>
                     </div>
-                    <p>This game stands out as a casual 1 vs 1 online multiplayer football experience with a global reach, attracting over 100 millions of players worldwide. Serving as a flagship title for Masomo, it has garnered widespread popularity and engagement across diverse communities.</p>
-                    <p>My key contributions:</p>
+                    <p>Contributed to the flagship 1v1 online football title reaching over 100 million players globally. Handled complex system-level logic and high-scale SDK integrations using Cocos2d-x and C++.</p>
+                    <p><strong>Key Technical Contributions:</strong></p>
                     <ul class="list-disc list-inside space-y-2 mt-2">
-                        <li>Modified the logic governing the creation order of automatic popups, a task that proved challenging due to its dependence on numerous interconnected logics. This required a meticulous approach to ensure the smooth transition, considering the intricate dependencies. Despite the complexity, I navigated the adjustments with care and precision, ultimately achieving a successful implementation.</li>
-                        <li>Implemented changes to the default characters in a more generalized manner, a task that posed challenges due to the dispersed nature of character configurations across various locations. Navigating through these diverse locations and identifying the correct parameters required careful attention. Despite the complexity, I managed to locate and modify them successfully, ensuring a more streamlined and cohesive configuration for the default characters.</li>
-                        <li>Integrated various third-party components, such as Frameplay, ANRWatchCat, Goliath, and IronSource.</li>
+                        <li>Refined automatic popup priority logic, managing intricate state dependencies to optimize user funnel.</li>
+                        <li>Architected a generalized character configuration system to unify parameters dispersed across the legacy codebase.</li>
+                        <li>Integrated performance-critical SDKs including Frameplay, Goliath, and ironSource for global monetization and analytics.</li>
                     </ul>
                 `
             },
             'basketball-arena': {
                 title: 'Basketball Arena',
-                images: [
-                    'https://i.imgur.com/76KfJ8A.jpeg',
-                    'https://i.imgur.com/tsDQWKs.jpeg'
-                ],
+                images: ['https://i.imgur.com/76KfJ8A.jpeg', 'https://i.imgur.com/tsDQWKs.jpeg'],
                 description: `
                     <div class="flex space-x-4 mb-6">
                         <a href="https://apps.apple.com/gb/app/basketball-arena-sports-game/id1491198695" target="_blank" class="flex-1 text-center bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg transition">App Store</a>
                         <a href="https://play.google.com/store/apps/details?id=com.masomo.basketballarena" target="_blank" class="flex-1 text-center bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition">Google Play</a>
                     </div>
-                    <p>This game is a casual 1 vs 1 online multiplayer basketball experience, attracting over 10 millions of players globally. I initiated this project from its inception when I joined Masomo, building it from the ground up.</p>
-                    <p>My key contributions:</p>
+                    <p>Initiated and built the online 1v1 basketball experience from the ground up, reaching over 10 million global players. Focused on robust UI systems and live-ops gameplay features.</p>
+                    <p><strong>Key Technical Contributions:</strong></p>
                     <ul class="list-disc list-inside space-y-2 mt-2">
-                        <li>Implemented various user interface features, including career, leaderboard, social, news, ring league, consecutive rewards, inbox, mega league, season, and reward vault.</li>
-                        <li>Introduced additional features, including the option to purchase superpowers during gameplay and the integration of new character animations.</li>
-                        <li>Integrated several third-party components, including Offerwall and implemented necessary dependencies to publish the game on Facebook Cloud.</li>
+                        <li>Developed fundamental UI modules including Career, Leaderboards, Ring League, and Reward Vault.</li>
+                        <li>Engineered gameplay features such as real-time superpower purchases and complex character animation blending.</li>
+                        <li>Managed platform dependencies for Facebook Cloud deployment and high-performance Offerwall integration.</li>
                     </ul>
                 `
             },
             'freelance-consultant': {
                 title: 'Game Development Consultant',
-                images: [
-                    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80'
-                ],
+                images: ['https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80'],
                 description: `
-                    <p>As a freelance Game Development Consultant, I leverage my experience with high-scale titles to help studios optimize their technical infrastructure and expand their reach.</p>
-                    <p>Core Expertise:</p>
+                    <p>Providing freelance technical consultancy for high-scale titles, helping studios optimize technical infrastructure and performance using Unity and C#.</p>
+                    <p><strong>Core Expertise:</strong></p>
                     <ul class="list-disc list-inside space-y-2 mt-2">
-                        <li><strong>Technical Optimization:</strong> Improving performance and memory footprint in Unity-based projects for mobile and PC.</li>
-                        <li><strong>Cross-Platform Development:</strong> Implementing platform-specific features using Java (Android) and Objective-C (iOS).</li>
-                        <li><strong>SDK Integration:</strong> Expert integration of monetization (IronSource), analytics, and crash reporting tools.</li>
-                        <li><strong>Refactoring & Architecture:</strong> Modernizing legacy C# codebases to improve maintainability and scalability.</li>
+                        <li><strong>Technical Optimization:</strong> Improving performance and memory footprint for cross-platform mobile and PC deployment.</li>
+                        <li><strong>Platform Engineering:</strong> Implementing platform-specific features using Java (Android) and Objective-C (iOS).</li>
+                        <li><strong>SDK & Refactoring:</strong> Integrating ironSource and Refactoring legacy C# codebases for better maintainability.</li>
                     </ul>
                 `
             },
             'unnannounced-PC-Game': {
-                title: 'Unnannounced PC Game',
-                images: [
-                    'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80'
-                ],
+                title: 'Unannounced PC Game',
+                images: ['https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80'],
                 description: `
-                    <p>Contributed to an unannounced PC title at Astrarium Games using Unity and C#. Responsibilities included implementing core gameplay systems and collaborative feature development.</p>
+                    <p>Contributed as a systems programmer to an unannounced PC title at Astrarium Games using Unity and C#.</p>
+                    <p><strong>Key Responsibilities:</strong></p>
+                    <ul class="list-disc list-inside space-y-2 mt-2">
+                        <li>Developed modular gameplay systems designed for architectural scalability.</li>
+                        <li>Collaborated with design leads to implement and refine reactive gameplay mechanics.</li>
+                        <li>Conducted deep-level code optimization for high-fidelity PC performance.</li>
+                    </ul>
                 `
             },
-             'ai-pcg': {
+            'ai-pcg': {
                 title: 'AI-Driven PCG Framework',
                 images: ['https://i.imgur.com/7TAbLyl.jpeg'],
-                description: `<p>Developed an AI-Driven PCG framework on Unreal Engine for my Master's project at Abertay University. This framework is designed for third-person shooter games to create adaptive and context-sensitive environments.</p>`
+                description: `
+                    <div class="flex space-x-4 mb-8">
+                        <a href="https://youtu.be/PfPrV-whhYA?si=yscw3-KX8D86LXRu" target="_blank" class="bg-red-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">Watch Project Footage →</a>
+                        <a href="https://github.com/PeaceHears/unreal-ai-driven-pcg-framework" target="_blank" class="bg-emerald-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">View on GitHub →</a>
+                    </div>
+                    <p>Developed as a Master's thesis at Abertay University, this framework addresses the static nature of environment design in Third-Person Shooters (TPS). Built on <strong>Unreal Engine 5</strong>, it utilizes AI techniques to create dynamic, context-sensitive levels that adapt to player combat states.</p>
+                    <p><strong>Senior-Level Research & Implementation:</strong></p>
+                    <ul class="list-disc list-inside space-y-2 mt-2">
+                        <li><strong>Lyra Framework Foundation:</strong> Extended the modular architecture of Epic Games' Lyra to implement custom procedural logic.</li>
+                        <li><strong>Gameplay Ability System (GAS):</strong> Integrated GAS tags to monitor player metrics and trigger real-time environmental adaptation.</li>
+                        <li><strong>Contextual Environment Design:</strong> Implemented modules that shift layout density and cover placement based on conflict intensity.</li>
+                        <li><strong>MetaHuman Integration:</strong> Utilized MetaHumans for high-fidelity player representation within the procedural world.</li>
+                    </ul>
+                `,
+                technical: aiPcgSamples
             },
             'orbital-defenders': {
                 title: 'Orbital Defenders',
                 images: ['https://i.imgur.com/OvvXAtE.jpeg'],
                 description: `
-                    <a href="https://peacehears.itch.io/orbital-defenders" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold text-sm inline-block mb-4">View on Itch.io →</a>
+                    <div class="flex space-x-4 mb-8">
+                        <a href="https://peacehears.itch.io/orbital-defenders" target="_blank" class="bg-indigo-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">View on itch.io →</a>
+                        <a href="https://github.com/PeaceHears/unreal-space-shooter" target="_blank" class="bg-emerald-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">View on GitHub →</a>
+                    </div>
                     <p>This is a 3D space shooter game developed on the Unreal Engine 5 using Blueprint and C++. It emerged as a project with 2 programmers, including myself, in the GameDev.tv Game Jam 2025.</p>
                 `
             },
@@ -461,63 +919,85 @@
                 title: 'All or Nothing',
                 images: ['https://i.imgur.com/Pw1pwVp.jpeg'],
                 description: `
-                    <a href="https://peacehears.itch.io/all-or-nothing" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold text-sm inline-block mb-4">View on Itch.io →</a>
-                    <p>The game is 2D top-down roguelike fast-paced action style that is played using playing cards. Gameplay is similar to Enter the Gungeon game elements. The player navigates levels from a bird's-eye view. The player plays the game in a casino theme with slot machines and poker tables. The game features randomized enemies, different maps, rooms as well as dynamic card decks that make each playthrough unique. Permadeath is a key element, meaning that once the player dies, they lose all progress and must start over, which raises the stakes and encourages careful planning and quick reflexes. Combat is intense, requiring players to dodge enemy attacks while shooting, slashing and managing a variety of attack styles. With challenging boss fights, and constant randomness, the game offers a high-replayability experience that tests both strategy and skill as the player must use each run to improve and get further through the casino.</p>
-                    <p>This game was developed at Abertay University.</p>
-                `
+                    <div class="flex space-x-4 mb-8">
+                        <a href="https://peacehears.itch.io/all-or-nothing" target="_blank" class="bg-indigo-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">View on itch.io →</a>
+                    </div>
+                    <p>Served as the <strong>Sole Programmer</strong> in a multidisciplinary team of 7 for this academic project at Abertay University. Architected a modular 2D roguelike engine in <strong>Unity</strong> featuring a data-driven card combat system and procedurally generated environments.</p>
+                    <p><strong>Senior-Level Architectural Contributions:</strong></p>
+                    <ul class="list-disc list-inside space-y-2 mt-2">
+                        <li><strong>Iterative Procedural Generation:</strong> Built an iterative room generator that creates unique casino floor layouts while ensuring total pathfinding consistency via programmatic nav-grid baking.</li>
+                        <li><strong>Extensible Card System:</strong> Engineered a ScriptableObject-based ability framework that separates data from execution logic, allowing designers to prototype cards (damage, status buffs) with zero code changes.</li>
+                        <li><strong>Refined Game Feel:</strong> Coupled physics-based locomotion with complex Animator Blend Trees and custom DoTween sequences to achieve a high-precision 'roguelike' control response.</li>
+                        <li><strong>Production Management:</strong> Managed technical tasks and versioning using Perforce, ensuring seamless integration within an agile development cycle.</li>
+                    </ul>
+                `,
+                technical: allOrNothingSamples
             },
             'bubblegum-businessman': {
                 title: 'Bubblegum Businessman',
                 images: ['https://i.imgur.com/W4JM5AK.jpeg'],
                 description: `
-                    <a href="https://peacehears.itch.io/bubblegum-businessman" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold text-sm inline-block mb-4">View on Itch.io →</a>
-                    <p>This is a 2D pixel art game. It was developed on the Unity using C#, it emerged as a project with 1 programmer (me) and 4 artists in Global Game Jam 2025 at Abertay University.</p>
-                `
+                    <div class="flex space-x-4 mb-8">
+                        <a href="https://peacehears.itch.io/bubblegum-businessman" target="_blank" class="bg-indigo-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">View on itch.io →</a>
+                        <a href="https://github.com/PeaceHears/GGJ_BusinessGum" target="_blank" class="bg-emerald-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">View on GitHub →</a>
+                    </div>
+                    <p>A fast-paced 2D pixel art game developed for <strong>Global Game Jam 2025</strong> where I served as the <strong>Sole Programmer</strong>. Architected a custom physics-driven ascent engine in <strong>Unity</strong>, managing responsive inflation controls and complex environmental layering within a tight 48-hour development cycle.</p>
+                    <p><strong>Technical Focus:</strong></p>
+                    <ul class="list-disc list-inside space-y-2 mt-2">
+                        <li><strong>Custom Camera Controller:</strong> Implemented a Cinemachine-extended axis-locking system to handle vertical-only gameplay.</li>
+                        <li><strong>Growth-to-Physics Scalar:</strong> Coupled visual scaling (gum inflation) with vertical velocity and drag coefficients for tactile locomotion.</li>
+                        <li><strong>Optimized Layer Management:</strong> Developed a decoupled parallax system for efficient performance on mobile and web platforms.</li>
+                    </ul>
+                `,
+                technical: bubblegumSamples
             },
             'night-street-aurora': {
                 title: 'Night Street View with Aurora',
-                images: [
-                    'https://i.imgur.com/vvRWaQE.jpeg'
-                ],
+                images: ['https://i.imgur.com/vvRWaQE.jpeg'],
                 description: `
-                    <a href="https://youtu.be/3eNjzeNT3nE?si=xM5qOgHoQ_AX3r1D" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold text-sm inline-block mb-4">Watch Project Footage on YouTube →</a>
+                    <div class="flex space-x-4 mb-8">
+                        <a href="https://youtu.be/3eNjzeNT3nE?si=xM5qOgHoQ_AX3r1D" target="_blank" class="bg-red-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">Watch Project Footage →</a>
+                        <a href="https://github.com/PeaceHears/night-street-view-with-aurora" target="_blank" class="bg-emerald-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">View on GitHub →</a>
+                    </div>
                     <p>The application was built with features and techniques to demonstrate a night street view including an Aurora Borealis (Northern Lights). Two main parts (land and sky) and their pieces are rendered on the scene.</p>
                     <p><strong>Key Technical Features:</strong></p>
                     <ul class="list-disc list-inside space-y-2 mt-2">
-                        <li><strong>Render to Texture:</strong> The whole scene is created using render to texture technique to reduce the cost of dynamic effects, handle post-processing effects, save resources with pre-rendered backgrounds, and simplify the rendering pipeline.</li>
-                        <li><strong>Post-Processing:</strong> Implemented specific shader effects for the night aesthetic.</li>
-                        <li><strong>Dynamic Geometry:</strong> Custom geometry creation for the environment.</li>
+                        <li><strong>Render to Texture (RTT):</strong> The whole scene is created using RTT to reduce the cost of dynamic effects, handle post-processing, and simplify the rendering pipeline.</li>
+                        <li><strong>Multi-Pass Rendering:</strong> Utilizes different passes for shadows, depth, and post-process blurring.</li>
+                        <li><strong>DirectX 11 Tessellation:</strong> Implementation of Hull and Domain shaders to dynamically increase detail on terrain and geometry.</li>
+                        <li><strong>Custom Post-Processing:</strong> Implementation of horizontal and vertical Gaussian blur shaders for bloom-like effects.</li>
                     </ul>
-                    <p class="mt-4">Developed using C++ and DirectX11 at Abertay University.</p>
-                `
+                `,
+                technical: auroraSamples
             },
             'advanced-procedural-game': {
                 title: 'Advanced Procedural Game',
-                images: [
-                    'https://i.imgur.com/lJhmgeZ.jpeg'
-                ],
+                images: ['https://i.imgur.com/lJhmgeZ.jpeg'],
                 description: `
-                    <a href="https://youtu.be/Xjaf3zDb8E8?si=A8elvwVrg7nNusKW" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold text-sm inline-block mb-4">Watch Project Footage on YouTube →</a>
+                    <div class="flex space-x-4 mb-8">
+                        <a href="https://youtu.be/Xjaf3zDb8E8?si=A8elvwVrg7nNusKW" target="_blank" class="bg-red-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">Watch Project Footage →</a>
+                        <a href="https://github.com/PeaceHears/CMP505_Assessment_Test/tree/refactor/refine-old-state" target="_blank" class="bg-emerald-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">View on GitHub →</a>
+                    </div>
                     <p>This program is a sophisticated terrain and object interaction simulation game developed using DirectX11. The game showcases an elaborate terrain system capable of generating procedural landscapes with multiple customization options.</p>
                     <p><strong>Main Features:</strong></p>
                     <ul class="list-disc list-inside space-y-2 mt-2">
-                        <li><strong>Procedural Terrain Generation:</strong> The terrain is procedurally generated with various methods, including smoothing, faulting, and Perlin noise (Flafla2 2014), allowing for complex and diverse landscapes.</li>
+                        <li><strong>Procedural Terrain Generation:</strong> The terrain is procedurally generated with various methods, including smoothing, faulting, and Perlin noise, allowing for complex and diverse landscapes.</li>
                         <li><strong>Voronoi Regions:</strong> The terrain further divides into Voronoi regions colored differently, which provides visual cues for gameplay objectives.</li>
                         <li><strong>Object Interaction:</strong> The game features interactive objects scattered throughout the terrain. These objects change colors upon interaction based on predefined rules.</li>
                         <li><strong>Drone Player Control:</strong> The player controls a drone, which can fly across the terrain. The drone’s colors change upon interacting with the terrain regions.</li>
                         <li><strong>L-System Fractals:</strong> Procedural generation of organic-like structures (obstacles) using L-Systems.</li>
                         <li><strong>Game Objectives:</strong> The goal is to match object colors with the current region color. Upon matching all the colors, the player advances to the next level.</li>
                     </ul>
-                `
+                `,
+                technical: proceduralSamples
             },
             'defiers-of-the-four': {
                 title: 'Defiers of the Four',
-                images: [
-                    'https://i.imgur.com/WYVDjhX.jpeg',
-                    'https://i.imgur.com/Ct4be3S.jpeg'
-                    ],
+                images: ['https://i.imgur.com/Ct4be3S.jpeg', 'https://i.imgur.com/WYVDjhX.jpeg'],
                 description: `
-                    <a href="https://youtu.be/wXb_DtnJNmY?si=A_M24lkZ_CPsB8iL" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-semibold text-sm inline-block mb-4">Watch Project Footage on YouTube →</a>
+                    <div class="flex space-x-4 mb-8">
+                        <a href="https://youtu.be/wXb_DtnJNmY?si=A_M24lkZ_CPsB8iL" target="_blank" class="bg-red-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">Watch Project Footage →</a>
+                    </div>
                     <p>This game is an action-packed top-down experience designed for cooperative play. Developed on the Windows API using C++, it emerged as a project during our time in the Computer Game Design and Programming class at Dokuz Eylul University. Our instructor challenged us to create a game without relying on a game engine, prompting my college friends and me to collaboratively craft a distinctive and innovative gaming experience.</p>
                     <p>The game features four ally robots, and at the beginning of the game, users get to choose the model of the robot they will control. Player 1 and Player 2 are each assigned control of one robot at a time, with the computer taking control of the remaining robot. Players have the flexibility to switch between robots at any point during gameplay.</p>
                     <p>The game incorporates two types of fog. The first type, characterized by a gray color, is employed to define the field of view, allowing players to see enemies. This fog is positioned closer to the player than the second type. The second type of fog, distinguished by its black color, is utilized to establish the overall field of view for the entire game environment.</p>
@@ -526,20 +1006,19 @@
                     <p>Every robot is equipped with a unique weapon, which is internally mounted, preventing them from switching to alternative weapons. Each weapon comes with a limited ammo supply, and at the start of each level, robots are provided with a set amount of ammunition. Players can replenish their ammo by collecting it from fallen enemies. When a robot exhausts its ammo, the corresponding weapon becomes significantly less effective than its normal state.</p>
                     <p>Movement for both players and enemies is restricted by obstacles, and these obstacles serve as protection against bullets, functioning as effective cover. Certain obstacles can be destroyed using various methods, adding an element of strategy and dynamic gameplay to the overall experience.</p>
                     <p>At the ultimate level, players face a formidable boss enemy. Victory is achieved upon successfully defeating this challenging adversary.</p>
-                `
+                `,
+                technical: defiersSamples
             },
             'chess-mate': {
                 title: 'Chess Mate',
-                images: [
-                    'https://i.imgur.com/a5cSWvz.jpeg'
-                    ],
+                images: ['https://i.imgur.com/a5cSWvz.jpeg'],
                 description: `
                     <p>This game combines the classic elements of chess with additional rules and introduces unique enemies to create a distinct gaming experience. Players select their soldiers, each representing a specific chess piece with its respective rules, before the game commences. The gameplay unfolds on a traditional chess board, and the challenge lies in employing chess rules to engage with both the chosen soldiers and various waves of enemies. Positioned behind the board is a castle that players must defend throughout the game.</p>
                 `
             }
         };
 
-        // --- HERO CANVAS SCRIPT (THREE.JS 3D FLOATING SYMBOLS) ---
+        // --- HERO CANVAS SCRIPT ---
         const canvas = document.querySelector('.hero-canvas');
         let camera, scene, renderer, symbols, raycaster, mouse, draggedObject;
         const dragPlane = new THREE.Plane();
@@ -551,8 +1030,14 @@
             camera.position.z = 5;
             
             try {
-                renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-                renderer.setClearColor(0x0a0a1a);
+                // powerPreference: "high-performance" helps visibility on browsers like Edge
+                renderer = new THREE.WebGLRenderer({ 
+                    canvas: canvas, 
+                    alpha: true, 
+                    antialias: true,
+                    powerPreference: "high-performance"
+                });
+                renderer.setClearColor(0x0a0a1a, 0); // Transparent background for the fixed canvas
                 renderer.setSize(window.innerWidth, window.innerHeight);
                 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             } catch (e) {
@@ -568,9 +1053,9 @@
                 color: 0x4f46e5, metalness: 0.1, roughness: 0.5, emissive: 0x3b33a0, emissiveIntensity: 0.5
             });
             const shapes = [
-                new THREE.TorusGeometry(0.3, 0.1, 16, 100), // O shape
-                new THREE.BoxGeometry(0.5, 0.5, 0.5),      // Square shape
-                new THREE.ConeGeometry(0.4, 0.5, 3),        // Triangle shape
+                new THREE.TorusGeometry(0.3, 0.1, 16, 100),
+                new THREE.BoxGeometry(0.5, 0.5, 0.5),
+                new THREE.ConeGeometry(0.4, 0.5, 3),
             ];
             const xShape = createXShape(material);
 
@@ -678,87 +1163,45 @@
         canvas.addEventListener('mousemove', onMouseMove, false);
         window.addEventListener('mouseup', onMouseUp, false);
         
-        init();
-        animate();
+        // Use window.onload to ensure Edge initializes the fixed canvas correctly
+        window.addEventListener('load', () => {
+            init();
+            animate();
+        });
 
         // --- ANIMATIONS & MODAL LOGIC ---
         document.addEventListener('DOMContentLoaded', () => {
-            // Smooth Scrolling
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     const href = this.getAttribute('href');
-                    if (href && href.length > 1) { // Check if href exists and is more than just '#'
+                    if (href && href.length > 1) {
                         e.preventDefault();
                         const targetElement = document.querySelector(href);
                         if (targetElement) {
-                             targetElement.scrollIntoView({
-                                behavior: 'smooth'
-                            });
+                             targetElement.scrollIntoView({ behavior: 'smooth' });
                         }
                     }
                 });
             });
 
-            // GSAP Fade-in animations on scroll
             gsap.registerPlugin(ScrollTrigger);
             document.querySelectorAll('.fade-in').forEach((el) => {
-                gsap.to(el, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: el,
-                        start: 'top 85%',
-                        toggleActions: 'play none none none',
-                    }
-                });
+                gsap.to(el, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 85%' } });
             });
 
-            // Modal Logic
             const modal = document.getElementById('project-modal');
             const modalTitle = document.getElementById('modal-title');
             const modalGallery = document.getElementById('modal-gallery');
             const modalDescription = document.getElementById('modal-description');
             const modalCloseBtn = document.getElementById('modal-close-btn');
+            const modalTabs = document.getElementById('modal-tabs');
+            const overviewPage = document.getElementById('modal-overview-content');
+            const technicalPage = document.getElementById('modal-technical-content');
             const brandName = document.getElementById('brand-name');
             const brandPopup = document.getElementById('brand-popup');
-            let popupTimeout;
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
-            const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
-
-            brandName.addEventListener('click', (e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                brandPopup.classList.remove('hidden');
-                clearTimeout(popupTimeout);
-                popupTimeout = setTimeout(() => {
-                    brandPopup.classList.add('hidden');
-                }, 3000);
-            });
-            
-            document.addEventListener('click', function(event) {
-                if (!brandName.contains(event.target) && !brandPopup.contains(event.target)) {
-                    brandPopup.classList.add('hidden');
-                    clearTimeout(popupTimeout);
-                }
-            });
-
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.remove('hidden');
-            });
-            
-            mobileMenuCloseButton.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
-
-            mobileMenuLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                });
-            });
 
             document.querySelectorAll('.project-card').forEach(card => {
                 card.addEventListener('click', () => {
@@ -768,22 +1211,61 @@
                     if (data) {
                         modalTitle.textContent = data.title;
                         
-                        modalGallery.innerHTML = '';
-                        data.images.forEach(src => {
-                            if(src !== '') {
-                                const img = document.createElement('img');
-                                img.src = src;
-                                img.alt = data.title;
-                                img.className = 'rounded-lg w-full object-cover';
-                                img.onerror = () => img.src = `https://placehold.co/600x400/1a1a2e/e0e0e0?text=${data.title.replace(' ','+')}`;
-                                modalGallery.appendChild(img);
-                            }
+                        modalTabs.classList.add('hidden');
+                        overviewPage.classList.remove('hidden');
+                        technicalPage.classList.add('hidden');
+                        document.querySelectorAll('.tab-btn').forEach(b => {
+                            b.classList.remove('active', 'text-white', 'border-b-2', 'border-indigo-500');
+                            b.classList.add('text-gray-400');
                         });
+                        const overBtn = document.querySelector('[data-tab="overview"]');
+                        overBtn.classList.add('active', 'text-white', 'border-b-2', 'border-indigo-500');
+                        overBtn.classList.remove('text-gray-400');
 
+                        modalGallery.innerHTML = '';
+                        (data.images || []).forEach(src => {
+                            const img = document.createElement('img');
+                            img.src = src;
+                            img.className = 'rounded-lg w-full object-cover';
+                            img.onerror = () => img.src = `https://placehold.co/600x400/1a1a2e/e0e0e0?text=${data.title.replace(' ','+')}`;
+                            modalGallery.appendChild(img);
+                        });
                         modalDescription.innerHTML = data.description;
+
+                        if (data.technical) {
+                            modalTabs.classList.remove('hidden');
+                            technicalPage.innerHTML = data.technical.map(sample => `
+                                <div class="space-y-4">
+                                    <h4 class="font-technical text-xl text-indigo-400 uppercase tracking-tighter">${sample.title}</h4>
+                                    <p class="text-gray-400 text-sm leading-relaxed">${sample.description}</p>
+                                    ${sample.code}
+                                </div>
+                                <div class="h-px bg-white/10 my-8 last:hidden"></div>
+                            `).join('');
+                        }
                         
                         modal.classList.remove('hidden');
-                        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+            });
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tab = btn.dataset.tab;
+                    document.querySelectorAll('.tab-btn').forEach(b => {
+                        b.classList.remove('active', 'text-white', 'border-b-2', 'border-indigo-500');
+                        b.classList.add('text-gray-400');
+                    });
+                    btn.classList.add('active', 'text-white', 'border-b-2', 'border-indigo-500');
+                    btn.classList.remove('text-gray-400');
+
+                    if (tab === 'technical') {
+                        overviewPage.classList.add('hidden');
+                        technicalPage.classList.remove('hidden');
+                    } else {
+                        overviewPage.classList.remove('hidden');
+                        technicalPage.classList.add('hidden');
                     }
                 });
             });
@@ -794,13 +1276,19 @@
             };
 
             modalCloseBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal();
-                }
-            });
-        });
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
+            brandName.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                brandPopup.classList.remove('hidden');
+                setTimeout(() => brandPopup.classList.add('hidden'), 3000);
+            });
+
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
+            mobileMenuCloseButton.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            document.querySelectorAll('.mobile-menu-link').forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+        });
     </script>
 </body>
 </html>
