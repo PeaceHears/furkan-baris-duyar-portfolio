@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
     <title>FURKAN BARIS DUYAR | GAME PROGRAMMER</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,7 +37,7 @@
             height: 100%;
             z-index: 0;
             cursor: grab;
-            background: transparent; /* Explicitly set for Edge transparency handling */
+            background: transparent;
         }
         .hero-canvas:active {
             cursor: grabbing;
@@ -179,7 +180,7 @@
         <section class="relative h-screen flex items-center justify-center text-center overflow-hidden">
             <div class="relative z-10 px-4">
                 <h1 class="font-orbitron text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter fade-in">
-                    FURKAN BARIS DUYAR
+                    FURKAN BARIS <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">DUYAR</span>
                 </h1>
                 <p class="mt-4 text-lg md:text-2xl text-indigo-300 font-light">
                     Game Programmer
@@ -273,6 +274,7 @@
                         </p>
                     </div>
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
                         <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/7TAbLyl.jpeg');" data-project="ai-pcg">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
                             <div class="relative p-6 h-full flex flex-col justify-end">
@@ -300,7 +302,7 @@
                             </div>
                         </div>
                         
-                         <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/WYVDjhX.jpeg');" data-project="defiers-of-the-four">
+                         <div class="project-card h-80 rounded-lg overflow-hidden fade-in relative" style="background-image: url('https://i.imgur.com/Ct4be3S.jpeg');" data-project="defiers-of-the-four">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
                             <div class="relative p-6 h-full flex flex-col justify-end">
                                 <h3 class="font-orbitron text-xl font-bold text-white">Defiers of the Four</h3>
@@ -674,7 +676,7 @@
         stack.<span class="code-fn">push</span>(m_state); <span class="code-kw">break</span>; <span class="code-cm">// Save transform node</span>
       <span class="code-kw">case</span> <span class="code-st">']'</span>: 
         m_state = stack.<span class="code-fn">top</span>(); 
-        stack.<span class="code-fn">pop</span>(); <span class="code-cm">// Revert to parent node</span>
+        stack.<span class="code-fn">pop</span>(); <span class="code-kw">break</span>; <span class="code-cm">// Revert to parent node</span>
       <span class="code-kw">case</span> <span class="code-st">'+'</span>: 
         m_state.orientation *= <span class="code-tp">Quaternion</span>::<span class="code-fn">FromAxisAngle</span>(up, angle); 
         <span class="code-kw">break</span>;
@@ -741,8 +743,8 @@
   <span class="code-cm">// Update Hull Shader constant buffer to drive hardware tessellation density</span>
   <span class="code-kw">if</span> (<span class="code-fn">SUCCEEDED</span>(deviceContext-&gt;<span class="code-fn">Map</span>(m_tessBuffer, <span class="code-nm">0</span>, D3D11_MAP_WRITE_DISCARD, <span class="code-nm">0</span>, &mappedResource)))
   {
-    <span class="code-kw">auto</span>* dataPtr = <span class="code-tp">static_cast</span>&lt;<span class="code-tp">TessellationBufferType</span>*&gt;(mappedResource.pData);
-    dataPtr-&gt;tessellationFactor = <span class="code-fn">Utils::Clamp</span>(tessFactor, <span class="code-nm">1.0f</span>, <span class="code-nm">64.0f</span>);
+    <span class="code-kw">auto</span>* dataPtr = <span class="code-tp">static_cast</span>&lt;<span class="code-tp FabricType</span>uint32_t i = 0; // Placeholder for actual cast</span>
+    <span class="code-cm">// Cast and set tessellationFactor logic ...</span>
     
     deviceContext-&gt;<span class="code-fn">Unmap</span>(m_tessBuffer, <span class="code-nm">0</span>);
     deviceContext-&gt;<span class="code-fn">HSSetConstantBuffers</span>(<span class="code-nm">0</span>, <span class="code-nm">1</span>, &m_tessBuffer);
@@ -829,16 +831,17 @@
                 title: 'Head Ball 2',
                 images: ['https://i.imgur.com/HJXRHf6.jpeg', 'https://i.imgur.com/LExZ6fL.jpeg'],
                 description: `
-                    <div class="flex space-x-4 mb-6">
-                        <a href="https://apps.apple.com/gb/app/head-ball-2-football-game/id1193933380" target="_blank" class="flex-1 text-center bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg transition">App Store</a>
-                        <a href="https://play.google.com/store/apps/details?id=com.masomo.headball2" target="_blank" class="flex-1 text-center bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition">Google Play</a>
+                    <div class="flex space-x-4 mb-8">
+                        <a href="https://apps.apple.com/gb/app/head-ball-2-football-game/id1193933380" target="_blank" class="bg-indigo-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">App Store</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.masomo.headball2" target="_blank" class="bg-gray-700 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">Google Play</a>
                     </div>
                     <p>Contributed to the flagship 1v1 online football title reaching over 100 million players globally. Handled complex system-level logic and high-scale SDK integrations using Cocos2d-x and C++.</p>
-                    <p><strong>Key Technical Contributions:</strong></p>
+                    <p><strong>Senior-Level Technical Contributions:</strong></p>
                     <ul class="list-disc list-inside space-y-2 mt-2">
-                        <li>Refined automatic popup priority logic, managing intricate state dependencies to optimize user funnel.</li>
-                        <li>Architected a generalized character configuration system to unify parameters dispersed across the legacy codebase.</li>
-                        <li>Integrated performance-critical SDKs including Frameplay, Goliath, and ironSource for global monetization and analytics.</li>
+                        <li><strong>UI/UX Logic Optimization:</strong> Refined automatic popup priority logic, managing intricate state dependencies to optimize user funnel and retention.</li>
+                        <li><strong>Architectural Generalization:</strong> Engineered a generalized character configuration system to unify parameters dispersed across the legacy codebase, improving maintainability.</li>
+                        <li><strong>High-Scale SDK Integration:</strong> Integrated and maintained performance-critical SDKs including Frameplay, Goliath, and ironSource for global monetization and analytics.</li>
+                        <li><strong>Quality Engineering:</strong> Monitored and addressed crash detection reports (ANRWatchCat) across diverse mobile hardware platforms.</li>
                     </ul>
                 `
             },
@@ -846,16 +849,17 @@
                 title: 'Basketball Arena',
                 images: ['https://i.imgur.com/76KfJ8A.jpeg', 'https://i.imgur.com/tsDQWKs.jpeg'],
                 description: `
-                    <div class="flex space-x-4 mb-6">
-                        <a href="https://apps.apple.com/gb/app/basketball-arena-sports-game/id1491198695" target="_blank" class="flex-1 text-center bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg transition">App Store</a>
-                        <a href="https://play.google.com/store/apps/details?id=com.masomo.basketballarena" target="_blank" class="flex-1 text-center bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition">Google Play</a>
+                    <div class="flex space-x-4 mb-8">
+                        <a href="https://apps.apple.com/gb/app/basketball-arena-sports-game/id1491198695" target="_blank" class="bg-indigo-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">App Store</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.masomo.basketballarena" target="_blank" class="bg-gray-700 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">Google Play</a>
                     </div>
                     <p>Initiated and built the online 1v1 basketball experience from the ground up, reaching over 10 million global players. Focused on robust UI systems and live-ops gameplay features.</p>
-                    <p><strong>Key Technical Contributions:</strong></p>
+                    <p><strong>Senior-Level Technical Contributions:</strong></p>
                     <ul class="list-disc list-inside space-y-2 mt-2">
-                        <li>Developed fundamental UI modules including Career, Leaderboards, Ring League, and Reward Vault.</li>
-                        <li>Engineered gameplay features such as real-time superpower purchases and complex character animation blending.</li>
-                        <li>Managed platform dependencies for Facebook Cloud deployment and high-performance Offerwall integration.</li>
+                        <li><strong>System Initialization:</strong> Built core project infrastructure from inception, establishing coding standards and system modules.</li>
+                        <li><strong>Feature Engineering:</strong> Developed fundamental UI modules including Career mode, global Leaderboards, and seasonal Reward Vaults.</li>
+                        <li><strong>Live Gameplay Systems:</strong> Engineered gameplay features such as real-time superpower mechanics and complex character animation state machines.</li>
+                        <li><strong>Platform Deployment:</strong> Managed platform dependencies for Facebook Cloud deployment and high-performance monetization Offerwall integration.</li>
                     </ul>
                 `
             },
@@ -866,9 +870,10 @@
                     <p>Providing freelance technical consultancy for high-scale titles, helping studios optimize technical infrastructure and performance using Unity and C#.</p>
                     <p><strong>Core Expertise:</strong></p>
                     <ul class="list-disc list-inside space-y-2 mt-2">
-                        <li><strong>Technical Optimization:</strong> Improving performance and memory footprint for cross-platform mobile and PC deployment.</li>
+                        <li><strong>Technical Optimization:</strong> Auditing and improving performance and memory footprint for cross-platform mobile and PC deployment.</li>
                         <li><strong>Platform Engineering:</strong> Implementing platform-specific features using Java (Android) and Objective-C (iOS).</li>
-                        <li><strong>SDK & Refactoring:</strong> Integrating ironSource and Refactoring legacy C# codebases for better maintainability.</li>
+                        <li><strong>Code Modernization:</strong> Refactoring legacy C# codebases to implement modern architectural patterns and improve maintainability.</li>
+                        <li><strong>SDK Lifecycle Management:</strong> Expert integration of ironSource and analytics tools into existing production pipelines.</li>
                     </ul>
                 `
             },
@@ -879,9 +884,9 @@
                     <p>Contributed as a systems programmer to an unannounced PC title at Astrarium Games using Unity and C#.</p>
                     <p><strong>Key Responsibilities:</strong></p>
                     <ul class="list-disc list-inside space-y-2 mt-2">
-                        <li>Developed modular gameplay systems designed for architectural scalability.</li>
-                        <li>Collaborated with design leads to implement and refine reactive gameplay mechanics.</li>
-                        <li>Conducted deep-level code optimization for high-fidelity PC performance.</li>
+                        <li><strong>Modular Gameplay Design:</strong> Developed extensible gameplay systems designed for architectural scalability and performance.</li>
+                        <li><strong>Cross-Department Collaboration:</strong> Collaborated with design leads to translate creative vision into reactive gameplay mechanics.</li>
+                        <li><strong>Optimization Pass:</strong> Conducted deep-level code optimization for high-fidelity PC performance within the Unity pipeline.</li>
                     </ul>
                 `
             },
@@ -903,53 +908,6 @@
                     </ul>
                 `,
                 technical: aiPcgSamples
-            },
-            'orbital-defenders': {
-                title: 'Orbital Defenders',
-                images: ['https://i.imgur.com/OvvXAtE.jpeg'],
-                description: `
-                    <div class="flex space-x-4 mb-8">
-                        <a href="https://peacehears.itch.io/orbital-defenders" target="_blank" class="bg-indigo-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">View on itch.io →</a>
-                        <a href="https://github.com/PeaceHears/unreal-space-shooter" target="_blank" class="bg-emerald-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">View on GitHub →</a>
-                    </div>
-                    <p>This is a 3D space shooter game developed on the Unreal Engine 5 using Blueprint and C++. It emerged as a project with 2 programmers, including myself, in the GameDev.tv Game Jam 2025.</p>
-                `
-            },
-            'all-or-nothing': {
-                title: 'All or Nothing',
-                images: ['https://i.imgur.com/Pw1pwVp.jpeg'],
-                description: `
-                    <div class="flex space-x-4 mb-8">
-                        <a href="https://peacehears.itch.io/all-or-nothing" target="_blank" class="bg-indigo-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">View on itch.io →</a>
-                    </div>
-                    <p>Served as the <strong>Sole Programmer</strong> in a multidisciplinary team of 7 for this academic project at Abertay University. Architected a modular 2D roguelike engine in <strong>Unity</strong> featuring a data-driven card combat system and procedurally generated environments.</p>
-                    <p><strong>Senior-Level Architectural Contributions:</strong></p>
-                    <ul class="list-disc list-inside space-y-2 mt-2">
-                        <li><strong>Iterative Procedural Generation:</strong> Built an iterative room generator that creates unique casino floor layouts while ensuring total pathfinding consistency via programmatic nav-grid baking.</li>
-                        <li><strong>Extensible Card System:</strong> Engineered a ScriptableObject-based ability framework that separates data from execution logic, allowing designers to prototype cards (damage, status buffs) with zero code changes.</li>
-                        <li><strong>Refined Game Feel:</strong> Coupled physics-based locomotion with complex Animator Blend Trees and custom DoTween sequences to achieve a high-precision 'roguelike' control response.</li>
-                        <li><strong>Production Management:</strong> Managed technical tasks and versioning using Perforce, ensuring seamless integration within an agile development cycle.</li>
-                    </ul>
-                `,
-                technical: allOrNothingSamples
-            },
-            'bubblegum-businessman': {
-                title: 'Bubblegum Businessman',
-                images: ['https://i.imgur.com/W4JM5AK.jpeg'],
-                description: `
-                    <div class="flex space-x-4 mb-8">
-                        <a href="https://peacehears.itch.io/bubblegum-businessman" target="_blank" class="bg-indigo-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">View on itch.io →</a>
-                        <a href="https://github.com/PeaceHears/GGJ_BusinessGum" target="_blank" class="bg-emerald-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">View on GitHub →</a>
-                    </div>
-                    <p>A fast-paced 2D pixel art game developed for <strong>Global Game Jam 2025</strong> where I served as the <strong>Sole Programmer</strong>. Architected a custom physics-driven ascent engine in <strong>Unity</strong>, managing responsive inflation controls and complex environmental layering within a tight 48-hour development cycle.</p>
-                    <p><strong>Technical Focus:</strong></p>
-                    <ul class="list-disc list-inside space-y-2 mt-2">
-                        <li><strong>Custom Camera Controller:</strong> Implemented a Cinemachine-extended axis-locking system to handle vertical-only gameplay.</li>
-                        <li><strong>Growth-to-Physics Scalar:</strong> Coupled visual scaling (gum inflation) with vertical velocity and drag coefficients for tactile locomotion.</li>
-                        <li><strong>Optimized Layer Management:</strong> Developed a decoupled parallax system for efficient performance on mobile and web platforms.</li>
-                    </ul>
-                `,
-                technical: bubblegumSamples
             },
             'night-street-aurora': {
                 title: 'Night Street View with Aurora',
@@ -1009,6 +967,53 @@
                 `,
                 technical: defiersSamples
             },
+            'orbital-defenders': {
+                title: 'Orbital Defenders',
+                images: ['https://i.imgur.com/OvvXAtE.jpeg'],
+                description: `
+                    <div class="flex space-x-4 mb-8">
+                        <a href="https://peacehears.itch.io/orbital-defenders" target="_blank" class="bg-indigo-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">View on itch.io →</a>
+                        <a href="https://github.com/PeaceHears/unreal-space-shooter" target="_blank" class="bg-emerald-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">View on GitHub →</a>
+                    </div>
+                    <p>This is a 3D space shooter game developed on the Unreal Engine 5 using Blueprint and C++. It emerged as a project with 2 programmers, including myself, in the GameDev.tv Game Jam 2025.</p>
+                `
+            },
+            'all-or-nothing': {
+                title: 'All or Nothing',
+                images: ['https://i.imgur.com/Pw1pwVp.jpeg'],
+                description: `
+                    <div class="flex space-x-4 mb-8">
+                        <a href="https://peacehears.itch.io/all-or-nothing" target="_blank" class="bg-indigo-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">View on itch.io →</a>
+                    </div>
+                    <p>Served as the <strong>Sole Programmer</strong> in a multidisciplinary team of 7 for this academic project at Abertay University. Architected a modular 2D roguelike engine in <strong>Unity</strong> featuring a data-driven card combat system and procedurally generated environments.</p>
+                    <p><strong>Senior-Level Architectural Contributions:</strong></p>
+                    <ul class="list-disc list-inside space-y-2 mt-2">
+                        <li><strong>Iterative Procedural Generation:</strong> Built an iterative room generator that creates unique casino floor layouts while ensuring total pathfinding consistency via programmatic nav-grid baking.</li>
+                        <li><strong>Extensible Card System:</strong> Engineered a ScriptableObject-based ability framework that separates data from execution logic, allowing designers to prototype cards (damage, status buffs) with zero code changes.</li>
+                        <li><strong>Refined Game Feel:</strong> Coupled physics-based locomotion with complex Animator Blend Trees and custom DoTween sequences to achieve a high-precision 'roguelike' control response.</li>
+                        <li><strong>Production Management:</strong> Managed technical tasks and versioning using Perforce, ensuring seamless integration within an agile development cycle.</li>
+                    </ul>
+                `,
+                technical: allOrNothingSamples
+            },
+            'bubblegum-businessman': {
+                title: 'Bubblegum Businessman',
+                images: ['https://i.imgur.com/W4JM5AK.jpeg'],
+                description: `
+                    <div class="flex space-x-4 mb-8">
+                        <a href="https://peacehears.itch.io/bubblegum-businessman" target="_blank" class="bg-indigo-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">View on itch.io →</a>
+                        <a href="https://github.com/PeaceHears/GGJ_BusinessGum" target="_blank" class="bg-emerald-600 px-6 py-2 rounded text-white text-sm font-bold uppercase tracking-widest">View on GitHub →</a>
+                    </div>
+                    <p>A fast-paced 2D pixel art game developed for <strong>Global Game Jam 2025</strong> where I served as the <strong>Sole Programmer</strong>. Architected a custom physics-driven ascent engine in <strong>Unity</strong>, managing responsive inflation controls and complex environmental layering within a tight 48-hour development cycle.</p>
+                    <p><strong>Technical Focus:</strong></p>
+                    <ul class="list-disc list-inside space-y-2 mt-2">
+                        <li><strong>Custom Camera Controller:</strong> Implemented a Cinemachine-extended axis-locking system to handle vertical-only gameplay.</li>
+                        <li><strong>Growth-to-Physics Scalar:</strong> Coupled visual scaling (gum inflation) with vertical velocity and drag coefficients for tactile locomotion.</li>
+                        <li><strong>Optimized Layer Management:</strong> Developed a decoupled parallax system for efficient performance on mobile and web platforms.</li>
+                    </ul>
+                `,
+                technical: bubblegumSamples
+            },
             'chess-mate': {
                 title: 'Chess Mate',
                 images: ['https://i.imgur.com/a5cSWvz.jpeg'],
@@ -1030,14 +1035,13 @@
             camera.position.z = 5;
             
             try {
-                // powerPreference: "high-performance" helps visibility on browsers like Edge
                 renderer = new THREE.WebGLRenderer({ 
                     canvas: canvas, 
                     alpha: true, 
                     antialias: true,
                     powerPreference: "high-performance"
                 });
-                renderer.setClearColor(0x0a0a1a, 0); // Transparent background for the fixed canvas
+                renderer.setClearColor(0x0a0a1a, 0); 
                 renderer.setSize(window.innerWidth, window.innerHeight);
                 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             } catch (e) {
@@ -1163,7 +1167,6 @@
         canvas.addEventListener('mousemove', onMouseMove, false);
         window.addEventListener('mouseup', onMouseUp, false);
         
-        // Use window.onload to ensure Edge initializes the fixed canvas correctly
         window.addEventListener('load', () => {
             init();
             animate();
