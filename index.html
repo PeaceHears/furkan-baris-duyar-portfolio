@@ -194,7 +194,7 @@
                         <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                     </a>
                     <a href="https://peacehears.itch.io/" target="_blank" class="text-gray-300 hover:text-indigo-400 transition duration-300">
-                        <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28"><path d="M14.008 2.085c.42-.843 1.28-.843 1.7 0l1.68 3.385 3.738.542c.925.134 1.292 1.272.624 1.92L19.08 10.55l.635 3.72c.16  .922-.806 1.62-1.658 1.2L14.008 13.8l-3.34 1.67c-.85.42-1.818-.278-1.657-1.2l.635-3.72-2.67-2.618c-.668-.648-.3-1.786.625-1.92l3.737-.542 1.68-3.385zM28 19.46v-2.53c0-1.325-.93-2.43-2.2-2.66l-4.48-.8c-.27-.05-.5-.19-.67-.39l-2-2.3c-.7-.81-1.98-.81-2.68 0l-2 2.3c-.17.2-.4.34-.67-.39l-4.48.8c-1.27.23-2.2 1.335-2.2 2.66v2.53c0 1.325.93 2.43 2.2 2.66l4.48.8c.27.05-.5.19-.67.39l2 2.3c.7.81 1.98.81 2.68 0l2-2.3c.17-.2.4-.34-.67-.39l4.48-.8c1.27-.23 2.2-1.335 2.2-2.66z"/></svg>
+                        <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28"><path d="M14.008 2.085c.42-.843 1.28-.843 1.7 0l1.68 3.385 3.738.542c.925.134 1.292 1.272.624 1.92L19.08 10.55l.635 3.72c.16  .922-.806 1.62-1.658 1.2L14.008 13.8l-3.34 1.67c-.85.42-1.818-.278-1.657-1.2l.635-3.72-2.67-2.618c-.668-.648-.3-1.786.625-1.92l3.737-.542 1.68-3.385zM28 19.46v-2.53c0-1.325-.93-2.43-2.2-2.66l-4.48-.8c-.27-.05-.5-.19-.67-.39l-2-2.3c-.7-.81-1.98-.81-2.68 0l-2 2.3c-.17.2-.4.34-.67-.39l-4.48-.8c1.27-.23-2.2 1.335-2.2 2.66v2.53c0 1.325.93 2.43 2.2 2.66l4.48.8c.27.05-.5.19-.67.39l2 2.3c.7.81 1.98.81 2.68 0l2-2.3c.17-.2.4-.34-.67-.39l4.48-.8c1.27-.23 2.2-1.335 2.2-2.66z"/></svg>
                     </a>
                 </div>
                 <!-- About Me Content Integrated Here -->
@@ -1202,52 +1202,60 @@
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
 
+            const openProjectModal = (projectId, pushHistory = true) => {
+                const data = projectData[projectId];
+
+                if (data) {
+                    modalTitle.textContent = data.title;
+                    
+                    modalTabs.classList.add('hidden');
+                    overviewPage.classList.remove('hidden');
+                    technicalPage.classList.add('hidden');
+                    document.querySelectorAll('.tab-btn').forEach(b => {
+                        b.classList.remove('active', 'text-white', 'border-b-2', 'border-indigo-500');
+                        b.classList.add('text-gray-400');
+                    });
+                    const overBtn = document.querySelector('[data-tab="overview"]');
+                    overBtn.classList.add('active', 'text-white', 'border-b-2', 'border-indigo-500');
+                    overBtn.classList.remove('text-gray-400');
+
+                    modalGallery.innerHTML = '';
+                    (data.images || []).forEach(src => {
+                        const img = document.createElement('img');
+                        img.src = src;
+                        // Reinforced referrer policy for dynamically loaded images
+                        img.referrerPolicy = "no-referrer";
+                        img.className = 'rounded-lg w-full object-cover';
+                        img.onerror = () => img.src = `https://placehold.co/600x400/1a1a2e/e0e0e0?text=${data.title.replace(/ /g,'+')}`;
+                        modalGallery.appendChild(img);
+                    });
+                    modalDescription.innerHTML = data.description;
+
+                    if (data.technical) {
+                        modalTabs.classList.remove('hidden');
+                        technicalPage.innerHTML = data.technical.map(sample => `
+                            <div class="space-y-4">
+                                <h4 class="font-technical text-xl text-indigo-400 uppercase tracking-tighter">${sample.title}</h4>
+                                <p class="text-gray-400 text-sm leading-relaxed">${sample.description}</p>
+                                ${sample.code}
+                            </div>
+                            <div class="h-px bg-white/10 my-8 last:hidden"></div>
+                        `).join('');
+                    }
+                    
+                    modal.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+
+                    if (pushHistory) {
+                        history.pushState({ project: projectId }, '', '#' + projectId);
+                    }
+                }
+            };
+
             document.querySelectorAll('.project-card').forEach(card => {
                 card.addEventListener('click', () => {
                     const projectId = card.dataset.project;
-                    const data = projectData[projectId];
-
-                    if (data) {
-                        modalTitle.textContent = data.title;
-                        
-                        modalTabs.classList.add('hidden');
-                        overviewPage.classList.remove('hidden');
-                        technicalPage.classList.add('hidden');
-                        document.querySelectorAll('.tab-btn').forEach(b => {
-                            b.classList.remove('active', 'text-white', 'border-b-2', 'border-indigo-500');
-                            b.classList.add('text-gray-400');
-                        });
-                        const overBtn = document.querySelector('[data-tab="overview"]');
-                        overBtn.classList.add('active', 'text-white', 'border-b-2', 'border-indigo-500');
-                        overBtn.classList.remove('text-gray-400');
-
-                        modalGallery.innerHTML = '';
-                        (data.images || []).forEach(src => {
-                            const img = document.createElement('img');
-                            img.src = src;
-                            // Reinforced referrer policy for dynamically loaded images
-                            img.referrerPolicy = "no-referrer";
-                            img.className = 'rounded-lg w-full object-cover';
-                            img.onerror = () => img.src = `https://placehold.co/600x400/1a1a2e/e0e0e0?text=${data.title.replace(' ','+')}`;
-                            modalGallery.appendChild(img);
-                        });
-                        modalDescription.innerHTML = data.description;
-
-                        if (data.technical) {
-                            modalTabs.classList.remove('hidden');
-                            technicalPage.innerHTML = data.technical.map(sample => `
-                                <div class="space-y-4">
-                                    <h4 class="font-technical text-xl text-indigo-400 uppercase tracking-tighter">${sample.title}</h4>
-                                    <p class="text-gray-400 text-sm leading-relaxed">${sample.description}</p>
-                                    ${sample.code}
-                                </div>
-                                <div class="h-px bg-white/10 my-8 last:hidden"></div>
-                            `).join('');
-                        }
-                        
-                        modal.classList.remove('hidden');
-                        document.body.style.overflow = 'hidden';
-                    }
+                    openProjectModal(projectId);
                 });
             });
 
@@ -1271,12 +1279,15 @@
                 });
             });
 
-            const closeModal = () => {
+            const closeModal = (pushHistory = true) => {
                 modal.classList.add('hidden');
                 document.body.style.overflow = 'auto';
+                if (pushHistory) {
+                    history.pushState(null, '', window.location.pathname + window.location.search);
+                }
             };
 
-            modalCloseBtn.addEventListener('click', closeModal);
+            modalCloseBtn.addEventListener('click', () => closeModal());
             modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
             brandName.addEventListener('click', (e) => {
@@ -1289,6 +1300,22 @@
             mobileMenuButton.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
             mobileMenuCloseButton.addEventListener('click', () => mobileMenu.classList.add('hidden'));
             document.querySelectorAll('.mobile-menu-link').forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+            // --- BROWSER BACK/FORWARD AND DIRECT LINK LOGIC ---
+            window.addEventListener('popstate', (event) => {
+                const hash = window.location.hash.substring(1);
+                if (projectData[hash]) {
+                    openProjectModal(hash, false); // false = don't push state again
+                } else {
+                    closeModal(false); // If hash is removed via back button, close modal without pushing state
+                }
+            });
+
+            // Handle initial page load from a direct link (e.g., .../#head-ball-2)
+            const initialHash = window.location.hash.substring(1);
+            if (projectData[initialHash]) {
+                openProjectModal(initialHash, false);
+            }
         });
     </script>
 </body>
